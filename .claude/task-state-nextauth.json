@@ -1,0 +1,32 @@
+{
+  "active_task": {
+    "id": "nextauth-rbac-week1",
+    "title": "NextAuth + RBAC Implementation",
+    "mode": "DESARROLLO",
+    "phase": "Fase 5 - Backend Implementation",
+    "progress": 0,
+    "current_step": "Iniciando - Plan aprobado por Charlie",
+    "specialists_involved": [
+      "coder",
+      "security-specialist",
+      "tester"
+    ],
+    "files_modified": [],
+    "decisions": [
+      "Implementación SECUENCIAL (3 días)",
+      "Día 1: NextAuth Setup + Configuration",
+      "Día 2: RBAC Middleware (Guards)",
+      "Día 3: Integración en Chat API + Tests",
+      "3 providers: Credentials, Google OAuth, GitHub OAuth",
+      "JWT strategy (15 min access, 30 días refresh)",
+      "Guards: requireAuth, requireRole, requireTier, requireOwnership",
+      "Reemplazar todos los mock-user-id en Chat API",
+      "Bonus: signup endpoint si hay tiempo",
+      "Timeline: 2025-10-23 → 2025-10-26 (3 días)"
+    ],
+    "blockers": [],
+    "next_step": "coder ejecuta Día 1: NextAuth Setup",
+    "created_at": "2025-10-23T11:30:00Z",
+    "updated_at": "2025-10-23T11:30:00Z"
+  }
+}
