@@ -812,9 +812,12 @@ CLAUDE: Continúa con nueva tarea...
 
 ### Especialistas de PROYECTO (14 agentes)
 
-1. **planner** (Haiku) - Planificación y estimación
-   - Consulta a: architect, cost-analyzer
-   - Consultado por: CLAUDE (para planear fases/features)
+1. **planner** (Haiku) - Planificación estratégica y generación de roadmaps
+   - Responsabilidad: ÚNICO autorizado para crear/actualizar PROJECT-ROADMAP.md
+   - Consulta a: architect, cost-analyzer, tech-researcher
+   - Consultado por: CLAUDE (para planear fases/features), documenter
+   - Herramientas: Read, Write, Edit, Grep
+   - Versión: 2.0 (actualizado 2025-10-24)
 
 2. **architect** (Sonnet) - Diseño de arquitectura
    - Consulta a: data-architect, security-specialist
