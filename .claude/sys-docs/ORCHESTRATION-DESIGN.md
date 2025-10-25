@@ -1,130 +1,611 @@
-# ORCHESTRATION DESIGN - cjhirashi-agents MVP
+# ORCHESTRATION DESIGN - cjhirashi.com
 
-**Diseño Completo de Orquestación de 17 Agentes Especializados (14 de proyecto + 3 de orquestación)**
-
-**Versión**: 3.0 (Orquestación Adaptativa - 4 Modos de Operación)
-**Fecha**: 2025-10-22
-**Autor**: system-claude
-**Estado**: ✅ Completado (incluye MODO DESARROLLO + MODO FEATURE + MODO EMERGENCIA + MODO OPTIMIZACIÓN)
-
----
-
-## 📋 TABLA DE CONTENIDOS
-
-1. [Introducción](#introducción)
-2. [Modos de Operación](#modos-de-operación)
-3. [Estructura del Equipo](#estructura-del-equipo)
-4. [Mapeo de Agentes a Fases del Roadmap](#mapeo-de-agentes-a-fases-del-roadmap)
-5. [Distribución de Modelos LLM](#distribución-de-modelos-llm)
-6. [Optimización de Tokens y Costos](#optimización-de-tokens-y-costos)
-7. [Tabla de Participación Agente-por-Fase](#tabla-de-participación-agente-por-fase)
-8. [Especializaciones Técnicas](#especializaciones-técnicas)
-9. [Protocolo de Coordinación](#protocolo-de-coordinación)
+**Versión**: 1.0
+**Fecha de Creación**: 2025-10-25
+**Última Actualización**: 2025-10-25
+**Proyecto**: cjhirashi.com (Portfolio/Blog/CMS)
+**Tipo**: Sistema de Orquestación de Agentes Especializados
+**Objetivo**: Coordinar 17 agentes (14 de proyecto + 3 de orquestación) para desarrollar cjhirashi.com en 4-5 semanas
 
 ---
 
-## 🎯 INTRODUCCIÓN
+## RESUMEN EJECUTIVO
 
-Este documento describe la orquestación COMPLETA del equipo de 17 agentes especializados (14 de proyecto + 3 de orquestación) para el proyecto **cjhirashi-agents MVP**, adaptada al PROJECT-ROADMAP.md de 9 fases.
+Este documento define la orquestación completa del equipo de agentes especializado para **cjhirashi.com**, un portfolio personal + blog + CMS administrativo con asistente IA. El equipo está diseñado específicamente para las características de este proyecto:
 
-**Objetivo**: Maximizar eficiencia, minimizar costos, optimizar tokens, garantizar calidad profesional.
+**Características del Proyecto**:
+- Tech Stack: Next.js 15, TypeScript, Tailwind CSS v4, React 19
+- Tipo: Portfolio + Blog (Markdown + Mermaid) + CMS Admin
+- Hosting: Vercel (dominio cjhirashi.com)
+- Timeline: 4-5 semanas (2025-10-24 → 2025-12-05)
+- Complejidad: Media (9 fases: Fase 0-8)
 
-**Filosofía de Diseño**:
-- Equipo se adapta al proyecto, NO al revés
-- Agentes tienen responsabilidades ESPECÍFICAS (no genéricas)
-- Tareas claras y medibles por fase
-- Modelos LLM justificados costo-beneficio
-- Coordinación eficiente (PARALELO, SECUENCIAL, CONDICIONAL, ITERATIVO)
+**Equipo de Agentes**:
+- 14 agentes de PROYECTO (desarrollo)
+- 3 agentes de ORQUESTACIÓN (diseño, prompts, validación)
 
-**Fases del Roadmap**:
-1. Requirements & Technical Stack ✅
-2. Architecture Design ✅
-3. Database Design & Data Modeling ✅
-4. API Implementation & Testing ⏳ EN PROGRESO
-5. Core Backend Implementation 🔵 PLANEADA
-6. Frontend Development 🔵 PLANEADA
-7. Voice, Generative Features & Deployment 🔵 PLANEADA
-8. Beta Testing & Feedback 🔵 PLANEADA
-9. Growth & Phase 2 Features 🔵 PLANEADA
+**Optimización Estratégica**:
+- Uso inteligente de Haiku vs Sonnet (costo-beneficio)
+- Paralelización en Fase 1 y entre Fases 4-5-6
+- Workflows específicos por modo (DESARROLLO, FEATURE, EMERGENCIA, OPTIMIZACIÓN)
+- Estimación de tokens y costos LLM
 
 ---
 
-## 🎮 MODOS DE OPERACIÓN
+## 1. ESTRUCTURA DEL EQUIPO DE AGENTES
 
-La orquestación es **ADAPTATIVA** y soporta 4 modos de operación distintos según el contexto del trabajo:
+### 1.1 Agentes de PROYECTO (14 agentes)
 
-### MODO 1: DESARROLLO (Fases 1-9) - Proyecto Completo
+| # | Agente | Modelo LLM | Especialidad | Justificación del Modelo |
+|---|--------|------------|--------------|--------------------------|
+| 1 | planner | **Haiku** | Planificación estratégica, roadmaps | Tareas estructuradas, bajo contexto necesario |
+| 2 | architect | **Sonnet** | Arquitectura de software, ADR | Decisiones técnicas complejas, alto impacto |
+| 3 | data-architect | **Sonnet** | Diseño de BD, schemas, migrations | Decisiones críticas en estructura de datos |
+| 4 | security-specialist | **Sonnet** | Seguridad, autenticación, OWASP | Seguridad requiere análisis profundo |
+| 5 | ux-designer | **Haiku** | Diseño UI/UX, componentes visuales | Tareas creativas pero estructuradas |
+| 6 | coder | **Sonnet** | Implementación (Next.js, TS, React) | Código complejo, debugging, integración |
+| 7 | ai-specialist | **Sonnet** | Integración LLM, prompts IA | Requiere expertise en IA y optimización |
+| 8 | tester | **Sonnet** | Testing, QA, validación de calidad | Análisis profundo de edge cases |
+| 9 | cost-analyzer | **Haiku** | Análisis de costos y recursos | Cálculos predecibles, análisis numérico |
+| 10 | documenter | **Sonnet** | Documentación técnica + diagramas | Claridad, Mermaid, estructura compleja |
+| 11 | tech-researcher | **Haiku** | Investigación técnica (Mermaid, etc.) | Búsquedas estructuradas, documentación |
+| 12 | code-reviewer | **Sonnet** | Code review, security checks | Revisión crítica, detección de problemas |
+| 13 | system-analyzer | **Sonnet** | Análisis de sistemas, debugging | Debugging complejo, análisis sistémico |
+| 14 | diagram-designer | **Sonnet** | Diagramas Mermaid complejos | Visualizaciones técnicas de arquitectura |
 
-**Contexto**: Desarrollo del proyecto cjhirashi-agents MVP siguiendo las 9 fases del PROJECT-ROADMAP.md
+**Distribución de Modelos**:
+- **Haiku** (4 agentes): planner, ux-designer, cost-analyzer, tech-researcher
+- **Sonnet** (10 agentes): architect, data-architect, security-specialist, coder, ai-specialist, tester, documenter, code-reviewer, system-analyzer, diagram-designer
+
+**Justificación General**:
+- **Haiku** para tareas estructuradas, predecibles, bajo contexto (ahorro de costos ~97%)
+- **Sonnet** para decisiones técnicas críticas, código complejo, análisis profundo (máxima calidad)
+
+### 1.2 Agentes de ORQUESTACIÓN (3 agentes)
+
+| # | Agente | Modelo LLM | Especialidad | Justificación |
+|---|--------|------------|--------------|---------------|
+| 15 | system-claude | **Sonnet** | Diseño de orquestación de agentes | Decisiones estratégicas sobre equipo |
+| 16 | prompt-engineer | **Sonnet** | Generación y validación de prompts | Calidad de prompts es crítica |
+| 17 | orchestration-validator | **Sonnet** | Validación de consistencia 1-to-1 | Detección de discrepancias complejas |
+
+**CRÍTICO**: Estos 3 agentes NO participan en desarrollo del proyecto. Solo gestionan la orquestación interna de `.claude/`.
+
+---
+
+## 2. MAPEO DE AGENTES POR FASE
+
+### 2.1 Fase 0: Página "En Construcción" (URGENTE - 2-3h)
+
+**Modo de Operación**: EMERGENCIA (RUTA B) - SLA 3 horas
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | ux-designer | Diseñar página "En Construcción" (dark theme, purple/blue/pink) | 1h |
+| **Implementador** | coder | Implementar en Next.js (src/app/page.tsx), deploy a Vercel | 1h |
+| **Validador** | tester | Validar carga en cjhirashi.com, responsive, links | 15min |
+
+**Patrón de Coordinación**: SECUENCIAL (ux-designer → coder → tester)
+
+**Especialistas Secundarios**: Ninguno (fase urgente, mínima complejidad)
+
+**Criterios de Finalización**:
+- [ ] cjhirashi.com carga la página
+- [ ] Responsive (mobile/desktop)
+- [ ] Links a redes sociales funcionan
+- [ ] Design sofisticado y tech
+
+---
+
+### 2.2 Fase 1: Fundación & Diseño (3-4 días)
+
+**Modo de Operación**: DESARROLLO (Fase 1 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | architect | Arquitectura técnica de 7 capas, ADR, estándares | 6-8h |
+| **Co-Lead** | ux-designer | Design system (colores, tipografía), componentes base | 6-8h |
+| **Especialista DB** | data-architect | DB schema inicial (Users, Posts, Projects) | 3-4h |
+| **Implementador** | coder | Setup Next.js 15 + TS + Tailwind, estructura de carpetas | 2-3h |
+| **Documentador** | documenter | Documentar estándares, design system, arquitectura | 1-2h |
+| **Validador** | code-reviewer | Validar setup inicial, estándares de código | 1h |
+
+**Patrón de Coordinación**: PARALELO (architect + ux-designer simultáneos) → SECUENCIAL (coder → documenter)
+
+**Especialistas Secundarios**: diagram-designer (para diagramas de arquitectura)
+
+**Criterios de Finalización**:
+- [ ] DESIGN-SYSTEM.md completo y aprobado
+- [ ] ARCHITECTURE.md (7 capas) documentado
+- [ ] DB-SCHEMA.md diseñado
+- [ ] ADR.md con decisiones arquitectónicas
+- [ ] Next.js setup funcional
+- [ ] Estándares documentados
+
+**Documentos Generados**:
+1. `sys-docs/design/DESIGN-SYSTEM.md` (ux-designer)
+2. `sys-docs/architecture/ARCHITECTURE.md` (architect)
+3. `sys-docs/database/DB-SCHEMA.md` (data-architect)
+4. `sys-docs/architecture/ADR.md` (architect)
+5. `sys-docs/standards/CODE-STANDARDS.md` (documenter)
+6. `sys-docs/architecture/COMPONENT-INVENTORY.md` (ux-designer)
+
+---
+
+### 2.3 Fase 2: Autenticación & Admin Core (3-4 días)
+
+**Modo de Operación**: DESARROLLO (Fase 2 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | security-specialist | NextAuth.js v5, RBAC, CSRF protection | 7-9h |
+| **Co-Lead** | coder | Login/logout endpoints, middleware de auth | 8-10h |
+| **Especialista DB** | data-architect | Tablas de auth (Users, Sessions, Accounts) | 2-3h |
+| **Diseñador UI** | ux-designer | Layout y navegación del admin dashboard | 3-4h |
+| **Validador QA** | tester | Tests de autenticación (>80% cobertura) | 2-3h |
+| **Documentador** | documenter | Flujo de auth, endpoints, seguridad | 1-2h |
+
+**Patrón de Coordinación**: SECUENCIAL (security-specialist + data-architect → coder → ux-designer → tester → documenter)
+
+**Especialistas Secundarios**: code-reviewer (para validar security best practices)
+
+**Criterios de Finalización**:
+- [ ] Login funciona (Email + GitHub)
+- [ ] Logout funciona
+- [ ] Sesiones persisten
+- [ ] Middleware protege rutas /admin/*
+- [ ] CSRF protection activo
+- [ ] Tests pasan (>80%)
+
+**Documentos Generados**:
+1. `sys-docs/auth/AUTHENTICATION.md` (security-specialist)
+2. `sys-docs/auth/AUTH-ENDPOINTS.md` (coder)
+3. `sys-docs/admin/ADMIN-LAYOUT.md` (ux-designer)
+4. `sys-docs/database/MIGRATION-001-auth-tables.sql` (data-architect)
+5. `sys-docs/testing/TESTING-AUTH.md` (tester)
+
+---
+
+### 2.4 Fase 3: Sitio Público - Core (3-4 días)
+
+**Modo de Operación**: DESARROLLO (Fase 3 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | coder | Implementar Home, Navbar, Footer, Contact | 9-12h |
+| **Co-Lead** | ux-designer | Diseño de Home page (hero section), navbar, footer | 5-7h |
+| **SEO Specialist** | architect | SEO config (metadata, robots.txt, sitemap) | 2h |
+| **Validador QA** | tester | Responsive testing (375px-1920px) | 2-3h |
+| **Documentador** | documenter | Documentar páginas públicas | 1h |
+
+**Patrón de Coordinación**: PARALELO (ux-designer + coder) → SECUENCIAL (architect → tester → documenter)
+
+**Especialistas Secundarios**: Ninguno
+
+**Criterios de Finalización**:
+- [ ] Home page carga <3s
+- [ ] Navbar responsive
+- [ ] Footer con links correctos
+- [ ] Contact form valida inputs
+- [ ] Mobile responsive (100%)
+- [ ] SEO metadata correcto
+
+**Documentos Generados**:
+1. `sys-docs/pages/HOME-PAGE.md` (ux-designer)
+2. `sys-docs/pages/CONTACT-PAGE.md` (coder)
+3. `sys-docs/pages/NAVIGATION.md` (ux-designer)
+4. `sys-docs/seo/SEO-CONFIG.md` (architect)
+5. `sys-docs/testing/RESPONSIVE-TESTS.md` (tester)
+
+---
+
+### 2.5 Fase 4: Sistema de Portafolio (4-5 días) - PUEDE SER PARALELO CON FASE 5
+
+**Modo de Operación**: DESARROLLO (Fase 4 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | coder | CRUD endpoints /api/projects, admin panel, páginas públicas | 13-17h |
+| **Especialista DB** | data-architect | Tabla Projects (schema, indexes, relations) | 2h |
+| **Diseñador UI** | ux-designer | Admin panel proyectos, página /projects, /projects/[slug] | 7-9h |
+| **Validador QA** | tester | Tests de CRUD portfolio (>80% cobertura) | 2-3h |
+| **Documentador** | documenter | Sistema de portfolio, API, admin | 1h |
+
+**Patrón de Coordinación**: SECUENCIAL (data-architect → coder + ux-designer PARALELO → tester → documenter)
+
+**Especialistas Secundarios**: code-reviewer (para validar calidad de endpoints)
+
+**Criterios de Finalización**:
+- [ ] CRUD completo (crear/editar/borrar proyectos)
+- [ ] /projects muestra tarjetas dinámicas
+- [ ] /projects/[slug] funciona
+- [ ] Tags/categorías funcionan
+- [ ] Upload de imágenes funciona
+- [ ] Tests pasan (>80%)
+
+**Documentos Generados**:
+1. `sys-docs/portfolio/PORTFOLIO-SYSTEM.md` (architect)
+2. `sys-docs/api/PROJECT-ENDPOINTS.md` (coder)
+3. `sys-docs/admin/PORTFOLIO-ADMIN.md` (ux-designer)
+4. `sys-docs/database/MIGRATION-002-projects-table.sql` (data-architect)
+5. `sys-docs/testing/PORTFOLIO-TESTS.md` (tester)
+
+---
+
+### 2.6 Fase 5: Sistema de Blog (4-5 días) - PUEDE SER PARALELO CON FASE 4
+
+**Modo de Operación**: DESARROLLO (Fase 5 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | coder | CRUD /api/posts, parser Markdown, Mermaid, syntax highlighting | 17-22h |
+| **Co-Lead** | documenter | Configuración Markdown (remark/rehype), diagramas Mermaid | 2-3h |
+| **Especialista DB** | data-architect | Tabla Posts (schema, full-text search) | 2h |
+| **Investigador** | tech-researcher | Investigar Mermaid integration, best practices | 3-4h |
+| **Diseñador UI** | ux-designer | Admin editor posts, /blog (lista), /blog/[slug] | 6-9h |
+| **Validador QA** | tester | Tests de blog + Markdown rendering | 2-3h |
+
+**Patrón de Coordinación**: SECUENCIAL (tech-researcher → data-architect → coder + documenter PARALELO → ux-designer → tester)
+
+**Especialistas Secundarios**: code-reviewer (validar Markdown parsing), diagram-designer (validar Mermaid)
+
+**Criterios de Finalización**:
+- [ ] Markdown renderiza correctamente
+- [ ] Mermaid diagrams funcionan
+- [ ] Syntax highlighting funciona
+- [ ] CRUD posts completo
+- [ ] /blog lista posts
+- [ ] Búsqueda funciona
+- [ ] Tests pasan (>80%)
+
+**Documentos Generados**:
+1. `sys-docs/blog/BLOG-SYSTEM.md` (architect)
+2. `sys-docs/blog/MARKDOWN-CONFIG.md` (documenter)
+3. `sys-docs/api/POST-ENDPOINTS.md` (coder)
+4. `sys-docs/admin/BLOG-ADMIN.md` (ux-designer)
+5. `sys-docs/database/MIGRATION-003-posts-table.sql` (data-architect)
+6. `sys-docs/testing/BLOG-TESTS.md` (tester)
+7. `sys-docs/research/MERMAID-INTEGRATION.md` (tech-researcher)
+
+---
+
+### 2.7 Fase 6: Asistente IA para Contenido (3-4 días) - PUEDE SER PARALELO CON FASE 4-5
+
+**Modo de Operación**: DESARROLLO (Fase 6 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | ai-specialist | Integración Claude API, diseño de prompts optimizados | 5-7h |
+| **Implementador** | coder | Endpoints /api/ai/*, UI chat-like en admin | 6-8h |
+| **Especialista Security** | security-specialist | Rate limiting, validación de inputs para IA | 1-2h |
+| **Diseñador UI** | ux-designer | UI del asistente IA en admin (chat interface) | 3-4h |
+| **Validador QA** | tester | Tests de endpoints IA | 1-2h |
+| **Documentador** | documenter | Integración IA, prompts, endpoints | 1h |
+
+**Patrón de Coordinación**: SECUENCIAL (ai-specialist → coder + ux-designer PARALELO → security-specialist → tester → documenter)
+
+**Especialistas Secundarios**: cost-analyzer (para estimar costos de LLM), code-reviewer
+
+**Criterios de Finalización**:
+- [ ] Claude API conecta y funciona
+- [ ] Generación de contenido es útil
+- [ ] Prompts producen output consistente
+- [ ] UI intuitiva
+- [ ] Rate limiting previene abuso
+- [ ] Tests pasan
+
+**Documentos Generados**:
+1. `sys-docs/ai/AI-INTEGRATION.md` (ai-specialist)
+2. `sys-docs/ai/AI-PROMPTS.md` (ai-specialist)
+3. `sys-docs/api/AI-ENDPOINTS.md` (coder)
+4. `sys-docs/admin/AI-ADMIN-UI.md` (ux-designer)
+5. `sys-docs/costs/AI-COST-ANALYSIS.md` (cost-analyzer)
+
+---
+
+### 2.8 Fase 7: CMS Customización & Features Avanzadas (4-5 días)
+
+**Modo de Operación**: DESARROLLO (Fase 7 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | coder | SEO editable, borradores, versionado, publicación programada | 11-15h |
+| **Diseñador UI** | ux-designer | Dashboard de estadísticas, UI de features CMS | 3-4h |
+| **Validador QA** | tester | Tests de CMS features | 2-3h |
+| **Documentador** | documenter | Features CMS, versionado, exportación | 1h |
+
+**Patrón de Coordinación**: SECUENCIAL (coder → ux-designer → tester → documenter)
+
+**Especialistas Secundarios**: architect (para validar arquitectura de versionado), code-reviewer
+
+**Criterios de Finalización**:
+- [ ] Metadata SEO editable
+- [ ] Borradores/publicados funcionan
+- [ ] Versionado preserva historia
+- [ ] Publicación programada funciona
+- [ ] Dashboard de stats útil
+- [ ] Exportación CSV/JSON funciona
+
+**Documentos Generados**:
+1. `sys-docs/cms/CMS-FEATURES.md` (documenter)
+2. `sys-docs/cms/VERSIONING.md` (coder)
+3. `sys-docs/cms/EXPORT.md` (coder)
+
+---
+
+### 2.9 Fase 8: Analíticas & Polish Final (3-4 días)
+
+**Modo de Operación**: DESARROLLO (Fase 8 del roadmap)
+
+| Rol | Agente(s) | Tareas Específicas | Tiempo Estimado |
+|-----|-----------|-------------------|-----------------|
+| **Lead** | architect | Analytics integration, performance optimization, caching | 8-11h |
+| **Implementador** | coder | Error handling, logging | 2-3h |
+| **Diseñador UI** | ux-designer | Dashboard de analytics, polish UI/UX (animaciones) | 5-7h |
+| **Validador QA** | tester | Tests finales, validación performance (PageSpeed >= 90) | 2-3h |
+| **Documentador** | documenter | Analytics, optimizaciones, deployment checklist | 1h |
+
+**Patrón de Coordinación**: PARALELO (architect + coder + ux-designer) → SECUENCIAL (tester → documenter)
+
+**Especialistas Secundarios**: system-analyzer (para debugging performance), cost-analyzer (proyección de costos operacionales)
+
+**Criterios de Finalización**:
+- [ ] Analytics funciona (GA o Vercel)
+- [ ] PageSpeed Insights >= 90
+- [ ] Bundle size < 150KB (JS)
+- [ ] Caching reduce TTFB
+- [ ] Error handling robusto
+- [ ] UI pulida y profesional
+- [ ] Tests pasan 100%
+
+**Documentos Generados**:
+1. `sys-docs/analytics/ANALYTICS-SETUP.md` (architect)
+2. `sys-docs/performance/PERFORMANCE-OPTIMIZATION.md` (architect)
+3. `sys-docs/performance/CACHING-STRATEGY.md` (architect)
+4. `sys-docs/testing/TESTING-FINAL.md` (tester)
+5. `sys-docs/deployment/DEPLOYMENT-CHECKLIST.md` (documenter)
+
+---
+
+## 3. TABLA RESUMEN DE PARTICIPACIÓN AGENTE-POR-FASE
+
+| Agente | Fase 0 | Fase 1 | Fase 2 | Fase 3 | Fase 4 | Fase 5 | Fase 6 | Fase 7 | Fase 8 | Total Horas |
+|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|-------------|
+| **planner** | - | - | - | - | - | - | - | - | - | 0h (ya completó roadmap) |
+| **architect** | - | 6-8h | - | 2h | - | - | - | 1h | 8-11h | 17-22h |
+| **data-architect** | - | 3-4h | 2-3h | - | 2h | 2h | - | - | - | 9-10h |
+| **security-specialist** | - | - | 7-9h | - | - | - | 1-2h | - | - | 8-11h |
+| **ux-designer** | 1h | 6-8h | 3-4h | 5-7h | 7-9h | 6-9h | 3-4h | 3-4h | 5-7h | 39-53h |
+| **coder** | 1h | 2-3h | 8-10h | 9-12h | 13-17h | 17-22h | 6-8h | 11-15h | 2-3h | 69-91h |
+| **ai-specialist** | - | - | - | - | - | - | 5-7h | - | - | 5-7h |
+| **tester** | 15min | - | 2-3h | 2-3h | 2-3h | 2-3h | 1-2h | 2-3h | 2-3h | 13.25-17.25h |
+| **cost-analyzer** | - | - | - | - | - | - | 1h | - | 1h | 2h |
+| **documenter** | - | 1-2h | 1-2h | 1h | 1h | 2-3h | 1h | 1h | 1h | 9-11h |
+| **tech-researcher** | - | - | - | - | - | 3-4h | - | - | - | 3-4h |
+| **code-reviewer** | - | 1h | 1h | - | 1h | 1h | 1h | 1h | - | 6h |
+| **system-analyzer** | - | - | - | - | - | - | - | - | 1-2h | 1-2h |
+| **diagram-designer** | - | 1h | - | - | - | 1h | - | - | - | 2h |
+| **TOTAL POR FASE** | 2.25h | 19-27h | 24-32h | 19-25h | 26-33h | 34-45h | 18-25h | 19-24h | 20-27h | **181.25-240.25h** |
+
+**Total Estimado**: 181.25-240.25 horas
+
+**Con buffer 20%**: 217.5-288.3 horas
+
+**Timeline**: 4-5 semanas (compatible con roadmap)
+
+---
+
+## 4. OPTIMIZACIÓN DE TOKENS Y COSTOS LLM
+
+### 4.1 Proyección de Tokens por Modelo
+
+**Cálculo Base**:
+- Input promedio por tarea: 3,000 tokens
+- Output promedio por tarea: 2,000 tokens
+- Total tokens por hora: ~5,000 tokens/hora
+
+**Haiku (4 agentes: planner, ux-designer, cost-analyzer, tech-researcher)**:
+- Horas totales: ~56-72h
+- Tokens estimados: 280,000-360,000 tokens
+- Costo (input $0.25/1M, output $1.25/1M): $0.52-$0.67
+
+**Sonnet (10 agentes: resto)**:
+- Horas totales: ~125-168h
+- Tokens estimados: 625,000-840,000 tokens
+- Costo (input $3/1M, output $15/1M): $11.25-$15.12
+
+**TOTAL COSTOS LLM ESTIMADO**: ~$12-$16 (para TODO el proyecto)
+
+**Ahorro vs usar solo Sonnet**: ~$45-$60 (75% de ahorro en agentes Haiku)
+
+### 4.2 Justificación de Modelo por Agente
+
+**Criterios para HAIKU** (cuando cumple 3+ de estos):
+- [ ] Tareas predecibles y estructuradas
+- [ ] Contexto bajo (<2,000 tokens input)
+- [ ] Output esperado es formateable
+- [ ] No requiere razonamiento complejo
+- [ ] Bajo riesgo de error (no crítico)
+
+**Criterios para SONNET** (cuando cumple 2+ de estos):
+- [ ] Tareas complejas o no predecibles
+- [ ] Contexto alto (>3,000 tokens input)
+- [ ] Requiere razonamiento profundo
+- [ ] Decisiones técnicas críticas
+- [ ] Alto riesgo si hay error
+
+**Agentes con HAIKU (justificación)**:
+1. **planner**: Estructurado (roadmaps), bajo contexto, predecible
+2. **ux-designer**: Tareas creativas pero estructuradas (componentes, layouts)
+3. **cost-analyzer**: Cálculos numéricos, predecible, bajo riesgo
+4. **tech-researcher**: Búsquedas estructuradas, documentación existente
+
+**Agentes con SONNET (justificación)**:
+1. **architect**: Decisiones críticas de arquitectura (alto impacto)
+2. **data-architect**: Diseño de schemas complejos (crítico)
+3. **security-specialist**: Seguridad requiere análisis profundo (alto riesgo)
+4. **coder**: Código complejo (Next.js, TypeScript, React)
+5. **ai-specialist**: Integración LLM, prompts (expertise especializado)
+6. **tester**: Análisis de edge cases (requiere razonamiento)
+7. **documenter**: Documentación técnica compleja + Mermaid
+8. **code-reviewer**: Revisión crítica de código (detección de bugs)
+9. **system-analyzer**: Debugging complejo (razonamiento sistémico)
+10. **diagram-designer**: Diagramas arquitectónicos (visualización compleja)
+
+---
+
+## 5. PATRONES DE COORDINACIÓN (WORKFLOWS)
+
+### 5.1 Patrón SECUENCIAL (A → B → C)
+
+**Cuándo usar**: Cuando B depende del output de A, y C depende de B.
+
+**Ejemplo** (Fase 2: Auth):
+```
+security-specialist (diseña auth)
+  → data-architect (crea tablas)
+  → coder (implementa endpoints)
+  → ux-designer (crea UI de login)
+  → tester (valida funcionamiento)
+  → documenter (documenta flujo)
+```
+
+**Ventajas**: Claridad de dependencias, validación por etapas
+**Desventajas**: Tiempo total = suma de tiempos individuales
+
+### 5.2 Patrón PARALELO (A + B + C simultáneamente)
+
+**Cuándo usar**: Cuando tareas son independientes y pueden ejecutarse simultáneamente.
+
+**Ejemplo** (Fase 1: Fundación):
+```
+architect (arquitectura) + ux-designer (design system) + coder (setup Next.js)
+  → Sincronización cuando todos completan
+  → documenter (documenta todo)
+```
+
+**Ventajas**: Reduce tiempo total significativamente
+**Desventajas**: Requiere coordinación, posibles conflictos
+
+**Fases con paralelización**:
+- **Fase 1**: architect + ux-designer + coder (setup) = PARALELO
+- **Fases 4-5-6**: Portfolio + Blog + IA pueden correr en paralelo (no se bloquean)
+
+### 5.3 Patrón ITERATIVO (implementar → validar → refinar)
+
+**Cuándo usar**: Cuando calidad incremental es crítica (feedback loop hasta criterios).
+
+**Ejemplo** (Fase 5: Markdown rendering):
+```
+coder (implementa parser Markdown)
+  → tester (valida edge cases, reporta bugs)
+  → coder (refina parser hasta pasar tests)
+  → Máximo 3 iteraciones antes de escalada
+```
+
+**Ventajas**: Calidad alta, detección temprana de problemas
+**Desventajas**: Puede extender timeline si hay muchas iteraciones
+
+### 5.4 Patrón CONDICIONAL (decisión → rutas diferentes)
+
+**Cuándo usar**: Cuando necesitas decisión contextual antes de proceder.
+
+**Ejemplo** (Bug detection):
+```
+tester (detecta bug)
+  → SI bug es crítico → ESCALADA EMERGENCIA (RUTA B)
+  → SI bug es menor → RUTA A (nueva feature / fix normal)
+```
+
+**Ventajas**: Optimiza recursos según severidad
+**Desventajas**: Requiere toma de decisión clara
+
+---
+
+## 6. MODOS DE OPERACIÓN (4 MODOS ADAPTATIVOS)
+
+### 6.1 MODO 1: DESARROLLO (Fases 0-8 del Roadmap)
+
+**Contexto**: Desarrollo planificado del proyecto cjhirashi.com siguiendo las 9 fases.
 
 **Características**:
-- Patrón: SECUENCIAL con puntos de paralelización (Fase 5 + Fase 6)
-- Timeline: 3-4 meses (2025-10-20 → 2026-02-28)
-- SLA: Variable según fase (1 día a 3 meses)
-- Prioridad: Normal (sigue roadmap planificado)
+- Patrón: SECUENCIAL + PARALELO (optimización por fase)
+- Timeline: 4-5 semanas
+- SLA: Variable según fase
+- Prioridad: Normal (sigue roadmap)
 
-**Agentes Principales**: Todos los 17 agentes participan según fase
+**Agentes Participantes**: Todos los 14 agentes de proyecto según fase
 
-**Workflows**: 9 workflows de fase (PHASE-1 a PHASE-9)
+**Workflow Principal**:
+```
+1. planner → ROADMAP ya generado (PROJECT-ROADMAP.md)
+2. CLAUDE lee ROADMAP → identifica fase actual
+3. CLAUDE activa agentes según mapeo de fase
+4. Agentes ejecutan según patrón (SECUENCIAL/PARALELO)
+5. CLAUDE valida criterios de finalización
+6. CLAUDE actualiza PROJECT-ROADMAP.md
+7. CLAUDE reporta al usuario (Charlie)
+```
 
-**Cuándo usar**:
-- Desarrollo inicial del MVP
-- Implementación de fases planificadas
-- Rollout de features mayores planificadas
+**Documentación del Workflow**: `.claude/sys-docs/workflows/MODE-1-DESARROLLO-workflow.md`
 
----
+### 6.2 MODO 2: FEATURE (RUTA A - Nueva Funcionalidad)
 
-### MODO 2: FEATURE (RUTA A) - Nueva Funcionalidad
-
-**Contexto**: Agregar nueva feature/funcionalidad NO planeada originalmente
+**Contexto**: Agregar nueva feature NO planeada originalmente (fuera del roadmap).
 
 **Características**:
 - Patrón: SECUENCIAL (Assessment → Planning → Spec → Implementación → Review → Deploy → Docs)
-- Timeline: 3-14 días (según complejidad)
+- Timeline: 3-14 días
 - SLA: Variable (NO crítico)
-- Prioridad: Media-Alta (según business value)
+- Prioridad: Media-Alta
 
-**Agentes Principales**:
-1. **architect** (Lead Assessment) - ¿Afecta cuál fase? ¿Esfuerzo? ¿Bloqueadores?
-2. **planner** (Planning) - User stories, estimación, asignación
-3. **architect** (Especificación) - ADR, actualizar ARCHITECTURE.md
-4. **coder** (Implementación) - Rama feature/, código, tests
-5. **code-reviewer** (Review) - Calidad, security check, merge
-6. **architect** (Deployment) - Staging → Production
-7. **documenter** (Documentación) - Actualizar docs, changelog
+**Agentes Participantes**:
+1. architect (Lead Assessment)
+2. planner (Planning)
+3. architect (Especificación)
+4. coder (Implementación)
+5. code-reviewer (Review)
+6. architect (Deployment)
+7. documenter (Documentación)
 
-**Workflow**: RUTA-A-NUEVA-FEATURE-workflows.md
+**Workflow Principal**:
+```
+1. architect → Análisis de impacto (¿afecta qué fase?)
+2. planner → User stories, estimación
+3. architect → ADR, actualizar ARCHITECTURE.md
+4. coder → Rama feature/, implementación, tests
+5. code-reviewer → Calidad, security check
+6. architect → Deploy staging → production
+7. documenter → Actualizar docs, changelog
+```
 
-**Timeline Típico**:
-- Feature simple (UI change): 3-5 días
-- Feature media (new endpoint): 7-10 días
-- Feature compleja (new integration): 10-14 días
+**Documentación del Workflow**: `.claude/sys-docs/workflows/MODE-2-FEATURE-workflow.md`
 
-**Cuándo usar**:
-- Usuario solicita feature nueva NO en roadmap
-- Cambio de producto basado en feedback
-- Oportunidad de negocio requiere nueva capacidad
+### 6.3 MODO 3: EMERGENCIA (RUTA B - Bug Crítico)
 
----
-
-### MODO 3: EMERGENCIA (RUTA B) - Bug Crítico
-
-**Contexto**: Bug bloqueante de usuarios en producción que requiere fix INMEDIATO
+**Contexto**: Bug bloqueante de usuarios en producción que requiere fix INMEDIATO.
 
 **Características**:
 - Patrón: EXPEDITO (Triage → Fix → Review rápido → Deploy inmediato → Post-mortem)
-- Timeline: 4-6 horas (SLA: 4 horas máximo)
+- Timeline: 4-6 horas
 - SLA: **CRÍTICO - 4 HORAS MÁXIMO**
 - Prioridad: **MÁXIMA (bloquea todo lo demás)**
 
-**Agentes Principales**:
-1. **CLAUDE** (Triage) - Severidad, fase afectada, owner original, SLA 4h
-2. **coder** (Fix) - Rama hotfix/, debug, fix, test regresión
-3. **code-reviewer** (Review Expedito) - 30 min máximo, security + functionality
-4. **architect** (Deploy Inmediato) - Production + monitoreo 2h + comunicar
-5. **CLAUDE** (Post-mortem) - Root cause, documentar, lessons learned
+**Agentes Participantes**:
+1. CLAUDE (Triage)
+2. coder (Fix)
+3. code-reviewer (Review Expedito - 30 min)
+4. architect (Deploy Inmediato)
+5. CLAUDE (Post-mortem)
 
-**Workflow**: RUTA-B-BUG-CRITICO-workflows.md
+**Workflow Principal**:
+```
+1. CLAUDE → Triage (severidad, fase afectada, owner original)
+2. coder → Rama hotfix/, debug, fix, test regresión (2-3h)
+3. code-reviewer → Review expedito (30 min MAX)
+4. architect → Production + monitoreo 2h + comunicar
+5. CLAUDE → Post-mortem (root cause, lessons learned)
+```
 
 **Timeline Típico**:
 - Triage: 30 min
@@ -134,19 +615,11 @@ La orquestación es **ADAPTATIVA** y soporta 4 modos de operación distintos seg
 - Monitoreo: 2 horas
 - **TOTAL: 4-6 horas**
 
-**Cuándo usar**:
-- Chat endpoint retorna 500 errors
-- Auth falla para todos los usuarios
-- Database queries causan timeouts críticos
-- Security vulnerability detectada
+**Documentación del Workflow**: `.claude/sys-docs/workflows/MODE-3-EMERGENCIA-workflow.md`
 
-**Escalada**: Si SLA de 4h está en riesgo → Notificar al usuario inmediatamente
+### 6.4 MODO 4: OPTIMIZACIÓN (RUTA C - Refactoring/Performance)
 
----
-
-### MODO 4: OPTIMIZACIÓN (RUTA C) - Refactoring/Performance
-
-**Contexto**: Mejora interna de performance/código SIN cambiar features (zero feature changes)
+**Contexto**: Mejora interna de performance/código SIN cambiar features (zero feature changes).
 
 **Características**:
 - Patrón: VALIDACIÓN STRICT (Assessment → Planning → Implementación → Validation → Merge)
@@ -154,663 +627,408 @@ La orquestación es **ADAPTATIVA** y soporta 4 modos de operación distintos seg
 - SLA: Flexible (NO urgente)
 - Prioridad: Media (según impacto en SLA/costos)
 
-**Agentes Principales**:
-1. **data-architect** o **architect** (Assessment) - Identificar cuello botella, proponer solución, ROI
-2. **planner** (Planning) - Duración, prioridad, schedule
-3. **coder** (Implementación) - Rama perf/, zero feature changes, benchmark antes/después
-4. **architect** + **data-architect** (Validation) - SLA validado, sin regresiones
-5. **CLAUDE** (Merge & Release) - Minor version bump, changelog, deploy
+**Agentes Participantes**:
+1. architect o system-analyzer (Assessment)
+2. planner (Planning)
+3. coder (Implementación)
+4. architect (Validation)
+5. CLAUDE (Merge & Release)
 
-**Workflow**: RUTA-C-REFACTORING-workflows.md
-
-**Timeline Típico**:
-- Performance tuning (indexing): 3-4 días
-- Refactoring (code cleanup): 4-5 días
-- Optimización compleja (caching layer): 5-7 días
-
-**Cuándo usar**:
-- RAG queries latency > SLA (500ms vs 400ms target)
-- Database queries lentas (N+1 queries)
-- Bundle size muy grande (performance issue)
-- Technical debt acumulado que afecta velocity
+**Workflow Principal**:
+```
+1. architect → Identificar cuello de botella, proponer solución, ROI
+2. planner → Duración, prioridad, schedule
+3. coder → Rama perf/, zero feature changes, benchmark antes/después
+4. architect → Validar SLA, sin regresiones
+5. CLAUDE → Minor version bump, changelog, deploy
+```
 
 **Validación Crítica**:
-- Benchmark ANTES vs DESPUÉS (debe haber mejora medible)
-- ZERO feature changes (no cambia comportamiento para usuario)
-- Sin regresiones (todos los tests pasan)
+- Benchmark ANTES vs DESPUÉS (mejora >= 10% medible)
+- ZERO feature changes (comportamiento idéntico)
+- Todos los tests pasan (sin regresiones)
+
+**Documentación del Workflow**: `.claude/sys-docs/workflows/MODE-4-OPTIMIZACION-workflow.md`
 
 ---
 
-## 🧭 MATRIZ DE DECISIÓN: ¿Cuál Ruta Tomar?
+## 7. MATRIZ DE DECISIÓN: ¿Cuál Modo Activar?
 
-```mermaid
-graph TD
-    Start[Solicitud de Trabajo] --> Q1{¿Es bug bloqueante<br/>en producción?}
-    Q1 -->|SÍ| ModoEmergencia[MODO 3: EMERGENCIA<br/>RUTA B - Bug Crítico<br/>SLA: 4 horas]
-    Q1 -->|NO| Q2{¿Es nueva<br/>funcionalidad?}
+**CLAUDE evalúa el contexto y decide qué modo usar:**
 
-    Q2 -->|SÍ| ModoFeature[MODO 2: FEATURE<br/>RUTA A - Nueva Feature<br/>Timeline: 3-14 días]
-    Q2 -->|NO| Q3{¿Es mejora interna<br/>sin cambio de features?}
+```
+PREGUNTA 1: ¿Es bug bloqueante en producción?
+   SÍ → MODO 3: EMERGENCIA (RUTA B) - SLA: 4 horas
+   NO → PREGUNTA 2
 
-    Q3 -->|SÍ| ModoOptimizacion[MODO 4: OPTIMIZACIÓN<br/>RUTA C - Refactoring/Perf<br/>Timeline: 3-7 días]
-    Q3 -->|NO| Q4{¿Es parte de<br/>fases 1-9 planeadas?}
+PREGUNTA 2: ¿Es nueva funcionalidad?
+   SÍ → MODO 2: FEATURE (RUTA A) - Timeline: 3-14 días
+   NO → PREGUNTA 3
 
-    Q4 -->|SÍ| ModoDesarrollo[MODO 1: DESARROLLO<br/>Fases 1-9<br/>Timeline: 3-4 meses]
-    Q4 -->|NO| Clarificar[Solicitar claridad al usuario<br/>¿Qué tipo de trabajo es?]
+PREGUNTA 3: ¿Es mejora interna sin cambio de features?
+   SÍ → MODO 4: OPTIMIZACIÓN (RUTA C) - Timeline: 3-7 días
+   NO → PREGUNTA 4
 
-    style Start fill:#2d5f8d,stroke:#1a3a52,color:#ffffff
-    style ModoEmergencia fill:#d32f2f,stroke:#b71c1c,color:#ffffff
-    style ModoFeature fill:#388e3c,stroke:#2e7d32,color:#ffffff
-    style ModoOptimizacion fill:#1976d2,stroke:#1565c0,color:#ffffff
-    style ModoDesarrollo fill:#f57c00,stroke:#e65100,color:#ffffff
-    style Clarificar fill:#616161,stroke:#424242,color:#ffffff
+PREGUNTA 4: ¿Es parte de Fases 0-8 planeadas?
+   SÍ → MODO 1: DESARROLLO (Fases 0-8) - Timeline: 4-5 semanas
+   NO → Solicitar claridad al usuario (¿Qué tipo de trabajo es?)
 ```
 
 ---
 
-## 📊 COMPARACIÓN DE MODOS
+## 8. HANDOFFS ENTRE AGENTES (PROTOCOLO)
 
-| Modo | Timeline | SLA | Prioridad | Agentes Clave | Validación | Workflow |
-|------|----------|-----|-----------|---------------|------------|----------|
-| **DESARROLLO** | 3-4 meses | Variable | Normal | Todos (17) | Por fase | PHASE-1 a PHASE-9 |
-| **FEATURE** | 3-14 días | Flexible | Media-Alta | architect, planner, coder, code-reviewer, documenter | Pre-deploy | RUTA-A |
-| **EMERGENCIA** | 4-6 horas | **4h máx** | **MÁXIMA** | CLAUDE, coder, code-reviewer, architect | Expedita (30min) | RUTA-B |
-| **OPTIMIZACIÓN** | 3-7 días | Flexible | Media | architect, data-architect, coder | Strict (benchmarks) | RUTA-C |
+### 8.1 Estructura de Handoff
 
----
+**Cuando agente A termina tarea y pasa a agente B**:
 
-## 🔀 CAMBIO DE MODO
-
-**El equipo puede CAMBIAR DE MODO sin fricción:**
-
-**Ejemplo 1: De DESARROLLO → EMERGENCIA**
 ```
-Estamos en Fase 5 (Backend Implementation)
-   ↓
-Bug crítico detectado: Chat endpoint 500 errors
-   ↓
-PAUSA Fase 5 → ACTIVA MODO EMERGENCIA (RUTA B)
-   ↓
-Fix aplicado en 4 horas
-   ↓
-RETOMA Fase 5 desde donde se pausó
-```
-
-**Ejemplo 2: De DESARROLLO → FEATURE**
-```
-Estamos en Fase 6 (Frontend Development)
-   ↓
-Usuario solicita: "Agregar audio generation"
-   ↓
-EVALÚA: ¿Bloquea Fase 6? NO → Puede diferirse
-   ↓
-PLANEA: Siguiente sprint (después de Fase 6)
-   ↓
-Fase 6 completa → ACTIVA MODO FEATURE (RUTA A)
-   ↓
-Feature implementada en 10 días
+AGENTE A completa tarea
+  ↓
+CLAUDE valida criterios de salida del agente A
+  ↓
+CLAUDE prepara contexto para agente B:
+  - Qué completó agente A
+  - Qué archivos generó
+  - Qué decisiones tomó
+  - Qué debe hacer agente B
+  - Criterios de éxito de agente B
+  ↓
+CLAUDE delega a agente B
+  ↓
+AGENTE B ejecuta tarea
+  ↓
+CLAUDE valida criterios de salida del agente B
+  ↓
+...continúa flujo
 ```
 
-**Ejemplo 3: De OPERACIÓN → OPTIMIZACIÓN**
+### 8.2 Ejemplo Concreto (Fase 1: architect → coder)
+
+**Handoff**:
 ```
-MVP en producción (post Fase 7)
-   ↓
-Monitoreo detecta: RAG queries > 500ms (SLA: 400ms)
-   ↓
-ACTIVA MODO OPTIMIZACIÓN (RUTA C)
-   ↓
-Performance tuning en 4 días
-   ↓
-SLA cumplido: 350ms
-```
-
----
-
-## ⚙️ PROTOCOLO DE ACTIVACIÓN DE MODO
-
-**CUANDO USUARIO SOLICITA TRABAJO:**
-
-1. **CLAUDE EVALÚA CONTEXTO**:
-   - ¿Es bug bloqueante? → MODO 3 (EMERGENCIA)
-   - ¿Es nueva feature? → MODO 2 (FEATURE)
-   - ¿Es mejora interna? → MODO 4 (OPTIMIZACIÓN)
-   - ¿Es parte de fases planeadas? → MODO 1 (DESARROLLO)
-
-2. **CLAUDE PRESENTA PLAN ADAPTADO AL MODO**:
-   - Identifica modo correcto
-   - Muestra agentes involucrados
-   - Muestra timeline estimado
-   - Muestra criterios de éxito
-   - **ESPERA APROBACIÓN EXPLÍCITA**
-
-3. **USUARIO APRUEBA**:
-   - CLAUDE activa modo correspondiente
-   - Ejecuta workflow específico
-   - Coordina agentes según patrón del modo
-
-4. **VALIDACIÓN Y CIERRE**:
-   - Valida criterios de finalización del modo
-   - Documenta resultado
-   - Retorna a modo anterior (si aplica)
-
----
-
-## 👥 ESTRUCTURA DEL EQUIPO
-
-### Agentes de PROYECTO (14 especialistas)
-
-Estos agentes se enfocan en desarrollo, implementación, testing, y documentación del producto cjhirashi-agents.
-
-1. **planner** - Planificación y estimación
-2. **architect** - Diseño de arquitectura de software
-3. **data-architect** - Diseño de bases de datos y data modeling
-4. **coder** - Implementación de backend y frontend
-5. **security-specialist** - Seguridad, auth, RBAC
-6. **ai-specialist** - Integración IA, LLMs, RAG
-7. **ux-designer** - Diseño de UI/UX
-8. **tester** - Testing y QA (unit, integration, E2E)
-9. **cost-analyzer** - Análisis de costos y optimización
-10. **documenter** - Documentación técnica y diagramas Mermaid
-11. **tech-researcher** - Investigación técnica y mejores prácticas
-12. **code-reviewer** - Revisión de código y estándares
-13. **system-analyzer** - Análisis de sistemas y validación
-14. **diagram-designer** - Diseño de diagramas técnicos Mermaid
-
-### Agentes de ORQUESTACIÓN (3 agentes críticos)
-
-Estos agentes manejan la orquestación del equipo, NO el desarrollo del producto.
-
-15. **system-claude** - Diseñador de orquestación (este agente)
-16. **prompt-engineer** - Generador y validador de prompts
-17. **orchestration-validator** - Validador de consistencia (bajo demanda)
-
-**REGLA CRÍTICA**: Agentes de orquestación NUNCA tocan código del proyecto. Agentes de proyecto NUNCA tocan `.claude/`.
-
----
-
-## 🗺️ MAPEO DE AGENTES A FASES DEL ROADMAP
-
-### Fase 1: Requirements & Technical Stack ✅ COMPLETADO
-
-**Estado**: ✅ 100% completado
-**Duración**: 2 días (2025-10-20 → 2025-10-21)
-
-**Agentes Participantes**:
-- **planner** (Lead) - Estructurar requisitos, crear user stories, definir scope
-- **tech-researcher** (Secundario) - Investigar tech stack, comparar alternativas
-- **architect** (Validador) - Validar viabilidad técnica
-
-**Entregables**:
-- 7 documentos (7,900 líneas)
-- Tech stack recomendado
-- 12 incompatibilidades identificadas y resueltas
-- Scope MVP aprobado
-
----
-
-### Fase 2: Architecture Design ✅ COMPLETADO
-
-**Estado**: ✅ 100% completado
-**Duración**: 2 días (2025-10-21 → 2025-10-22)
-
-**Agentes Participantes**:
-- **architect** (Lead) - Diseñar arquitectura de 7 capas
-- **diagram-designer** (Secundario) - Crear diagramas Mermaid (system, layers, request-flow)
-- **documenter** (Secundario) - Documentar ADRs (Architecture Decision Records)
-- **security-specialist** (Consulta) - Validar decisiones de seguridad
-
-**Entregables**:
-- ARCHITECTURE.md (2,400 líneas)
-- 6 ADRs documentados
-- 3 diagramas Mermaid integrados
-- Stack técnico validado
-
----
-
-### Fase 3: Database Design & Data Modeling ✅ COMPLETADO
-
-**Estado**: ✅ 100% completado
-**Duración**: 1 día (2025-10-22)
-
-**Agentes Participantes**:
-- **data-architect** (Lead) - Diseñar schema de 54 tablas
-- **diagram-designer** (Secundario) - Crear ERD (Entity-Relationship Diagrams)
-- **documenter** (Secundario) - Documentar migrations y indexing strategy
-- **architect** (Validador) - Validar coherencia con arquitectura
-
-**Entregables**:
-- DATABASE.md (2,400 líneas con 54 tablas)
-- PINECONE-SCHEMA.md (800 líneas)
-- ERD.md (1,500 líneas con 2 diagramas)
-- MIGRATIONS.md (1,500 líneas)
-- INDEXING.md (1,500 líneas con 230+ índices)
-
----
-
-### Fase 4: API Implementation & Testing ⏳ EN PROGRESO
-
-**Estado**: ⏳ 0% completado
-**Duración Estimada**: 3-4 días (2025-10-22 → 2025-10-25)
-
-**Agentes Participantes**:
-- **architect** (Lead) - Crear API-DESIGN.md + RATE-LIMITING.md
-- **coder** (Secundario) - Crear ENDPOINTS.md + ERROR-HANDLING.md
-- **security-specialist** (Secundario) - Crear AUTHENTICATION.md (NextAuth + RBAC)
-- **tester** (Secundario) - Crear TESTING-STRATEGY.md (unit + integration + E2E)
-- **system-analyzer** (Validador) - Crear PHASE4-VALIDATION.md
-
-**Entregables**:
-- API-DESIGN.md (2,000 líneas con OpenAPI 3.0 spec)
-- ENDPOINTS.md (1,500 líneas con 20+ endpoints)
-- AUTHENTICATION.md (1,200 líneas con NextAuth + RBAC)
-- ERROR-HANDLING.md (1,000 líneas con error format + logging)
-- TESTING-STRATEGY.md (1,500 líneas con plan completo)
-- RATE-LIMITING.md (800 líneas con quotas por tier)
-- PHASE4-VALIDATION.md (800 líneas con pre-deployment checklist)
-
-**Criterios de Finalización**:
-- OpenAPI 3.0 completo
-- 20+ endpoints documentados
-- NextAuth + RBAC implementados
-- Error handling strategy definido
-- Testing plan completo
-- Rate limiting configurado
-- Pre-deployment checklist validado
-
----
-
-### Fase 5: Core Backend Implementation 🔵 PLANEADA
-
-**Estado**: 🔵 PLANEADA
-**Duración Estimada**: 2-3 semanas (2025-10-26 → 2025-11-09)
-
-**Agentes Participantes**:
-- **coder** (Lead Backend) - Implementar Chat API, RAG, LLM routing
-- **ai-specialist** (Secundario) - Configurar Vercel AI SDK, multi-LLM routing
-- **architect** (Consulta) - Validar implementación arquitectónica
-- **security-specialist** (Consulta) - Validar seguridad de endpoints
-- **tester** (Validador) - Crear tests unitarios y de integración
-
-**Tareas Principales**:
-- Setup Vercel AI SDK
-- Implementar model routing logic (gpt-4o, gpt-4o-mini, claude-3.5-sonnet)
-- Chat endpoint funcional con SSE
-- Pinecone RAG integration
-- Notificaciones básicas
-- Tests unitarios (>80% coverage)
-
-**Entregables**:
-- Chat API funcional
-- RAG integration con Pinecone
-- Multi-LLM routing implementado
-- Tests unitarios pasando
-- Code review aprobado
-
----
-
-### Fase 6: Frontend Development 🔵 PLANEADA
-
-**Estado**: 🔵 PLANEADA
-**Duración Estimada**: 2-3 semanas (2025-10-26 → 2025-11-09)
-**NOTA**: Puede iniciar EN PARALELO con Fase 5
-
-**Agentes Participantes**:
-- **coder** (Lead Frontend) - Implementar Dashboard, Chat interface, Settings
-- **ux-designer** (Secundario) - Refinar UI/UX, componentes React
-- **tester** (Validador) - Component testing, E2E testing
-- **documenter** (Secundario) - Documentar componentes y usage
-
-**Tareas Principales**:
-- Dashboard UI completo (Next.js 15 + React 18)
-- Chat interface con SSE real-time
-- Settings panel (API keys, model selection)
-- Conectar a APIs backend
-- Component testing (Vitest)
-
-**Entregables**:
-- Dashboard UI funcional
-- Chat interface con streaming
-- Settings panel completo
-- Component tests pasando
-- Code review aprobado
-
----
-
-### Fase 7: Voice, Generative Features & Deployment 🔵 PLANEADA
-
-**Estado**: 🔵 PLANEADA
-**Duración Estimada**: 2 semanas (2025-11-10 → 2025-11-23)
-
-**Agentes Participantes**:
-- **ai-specialist** (Lead) - OpenAI gpt-realtime, DALL-E image generation
-- **coder** (Secundario) - Implementar sector de tareas
-- **tester** (Validador) - Testing completo (unit + E2E)
-- **architect** (Deploy) - Deploy a staging y production
-- **security-specialist** (Consulta) - Validar seguridad pre-deploy
-- **documenter** (Secundario) - Crear deployment guide
-
-**Tareas Principales**:
-- OpenAI gpt-realtime integration (voice agents)
-- DALL-E image generation integration
-- Sector de tareas funcional
-- Testing completo (unit + E2E)
-- Deploy a staging
-- Deploy a production (MVP v0.1.0-alpha)
-
-**Entregables**:
-- Voice agents funcionando
-- Image generation funcionando
-- Tests pasan (80%+)
-- MVP v0.1.0-alpha en producción
-- Deployment guide documentado
-
-**Criterios de Finalización**:
-- Voice agents funcionando
-- Image generation funcionando
-- Tests pasan (80%+)
-- MVP en producción estable
-- Monitoring configurado
-
----
-
-### Fase 8: Beta Testing & Feedback 🔵 PLANEADA
-
-**Estado**: 🔵 PLANEADA
-**Duración Estimada**: 2 semanas (2025-11-24 → 2025-12-07)
-
-**Agentes Participantes**:
-- **tester** (Lead) - Coordinar beta users, monitorear feedback
-- **coder** (Secundario) - Bug fixes críticos
-- **ux-designer** (Secundario) - Ajustes de UI/UX basados en feedback
-- **system-analyzer** (Validador) - Performance tuning
-- **documenter** (Secundario) - Actualizar documentación con learnings
-
-**Tareas Principales**:
-- Seleccionar beta users (10-20)
-- Distribuir MVP v0.1.0-alpha
-- Monitorear feedback y bugs
-- Bug fixes críticos
-- Performance tuning
-- Actualizar documentación
-
-**Entregables**:
-- Beta testing report
-- Bug fixes aplicados
-- Performance optimizations aplicadas
-- Documentación actualizada con learnings
-
----
-
-### Fase 9: Growth & Phase 2 Features 🔵 PLANEADA
-
-**Estado**: 🔵 PLANEADA
-**Duración Estimada**: 3 meses (2025-12-08 → 2026-02-28)
-
-**Agentes Participantes**:
-- **planner** (Lead) - Planear Phase 2 features
-- **coder** (Secundario) - Implementar pricing, billing, nuevas features
-- **ux-designer** (Secundario) - Diseñar pricing page, checkout
-- **cost-analyzer** (Consulta) - Optimizar costos operacionales
-- **data-architect** (Consulta) - Escalar database para 100+ usuarios
-- **architect** (Validador) - Validar escalabilidad
-- **documenter** (Secundario) - Documentar nuevas features
-
-**Tareas Principales**:
-- Pricing page + checkout
-- Payment processing (Stripe)
-- Billing & subscriptions
-- Phase 2 features implementation
-- Advanced analytics
-- User acquisition & marketing
-- Escalado a v1.0.0
-
-**Entregables**:
-- Pricing page funcional
-- Payment processing integrado
-- Phase 2 features implementadas
-- Analytics dashboard
-- Marketing materials
-- v1.0.0 en producción
-
----
-
-## 🤖 DISTRIBUCIÓN DE MODELOS LLM
-
-### HAIKU (Claude 3.5 Haiku) - Tareas Rápidas y Eficientes
-
-**Costo**: $0.80/1M input tokens, $4/1M output tokens
-
-**Agentes asignados**:
-1. **planner** - Planificación y estimación (rápido, estructurado)
-2. **ux-designer** - Diseño UI/UX (iteraciones rápidas)
-3. **cost-analyzer** - Análisis de costos (cálculos rápidos)
-4. **tech-researcher** - Investigación técnica (búsquedas rápidas)
-
-**Justificación**: Tareas que requieren velocidad, bajo costo, respuestas estructuradas.
-
----
-
-### SONNET (Claude 3.5 Sonnet) - Tareas Complejas y Críticas
-
-**Costo**: $3/1M input tokens, $15/1M output tokens
-
-**Agentes asignados**:
-1. **architect** - Diseño arquitectónico (decisiones críticas)
-2. **data-architect** - Data modeling (complejidad alta)
-3. **coder** - Implementación (código de calidad)
-4. **security-specialist** - Seguridad (decisiones críticas)
-5. **ai-specialist** - IA y LLMs (complejidad alta)
-6. **tester** - Testing y QA (validación rigurosa)
-7. **documenter** - Documentación técnica (detalle y claridad)
-8. **code-reviewer** - Revisión de código (estándares altos)
-9. **system-analyzer** - Análisis de sistemas (complejidad alta)
-10. **diagram-designer** - Diagramas técnicos (precisión visual)
-11. **system-claude** - Diseño de orquestación (decisiones críticas)
-12. **prompt-engineer** - Ingeniería de prompts (calidad alta)
-13. **orchestration-validator** - Validación de consistencia (rigor)
-
-**Justificación**: Tareas que requieren razonamiento profundo, decisiones críticas, código complejo, validación rigurosa.
-
----
-
-## 💰 OPTIMIZACIÓN DE TOKENS Y COSTOS
-
-### Estrategia de Optimización
-
-**1. PARALELIZACIÓN Estratégica**
-- Fases 5 y 6 (Backend + Frontend) corren EN PARALELO
-- Ahorro de tiempo: ~2 semanas
-
-**2. DELEGACIÓN Selectiva**
-- HAIKU para tareas rápidas (planning, research, cost analysis, UI design)
-- SONNET para tareas críticas (architecture, coding, security, testing)
-
-**3. REUTILIZACIÓN de Contexto**
-- Agentes cargan contexto solo cuando es necesario
-- Documentación en sys-docs/ reduce repetición
-
-**4. VALIDACIÓN en Puntos Críticos**
-- Validación NO duplicada
-- Validador asignado estratégicamente por fase
-
-### Proyección de Costos por Fase
-
-| Fase | Agentes Activos | Modelo Dominante | Tokens Est. | Costo Est. |
-|------|----------------|------------------|------------|-----------|
-| Fase 1 | 3 (planner, tech-researcher, architect) | Haiku + Sonnet | 500K | $2-3 |
-| Fase 2 | 4 (architect, diagram-designer, documenter, security) | Sonnet | 800K | $4-5 |
-| Fase 3 | 4 (data-architect, diagram-designer, documenter, architect) | Sonnet | 700K | $3-4 |
-| Fase 4 | 5 (architect, coder, security, tester, system-analyzer) | Sonnet | 1M | $6-8 |
-| Fase 5 | 5 (coder, ai-specialist, architect, security, tester) | Sonnet | 2M | $12-15 |
-| Fase 6 | 4 (coder, ux-designer, tester, documenter) | Sonnet + Haiku | 1.5M | $8-10 |
-| Fase 7 | 6 (ai-specialist, coder, tester, architect, security, documenter) | Sonnet | 1.8M | $10-12 |
-| Fase 8 | 5 (tester, coder, ux-designer, system-analyzer, documenter) | Sonnet + Haiku | 1M | $6-8 |
-| Fase 9 | 7 (planner, coder, ux-designer, cost-analyzer, data-architect, architect, documenter) | Sonnet + Haiku | 2M | $12-15 |
-| **TOTAL** | **17 agentes** | **Híbrido** | **~11.3M** | **$63-80** |
-
-**Costo total estimado del proyecto (tokens LLM)**: $63-80 USD
-
-**NOTA**: Costos muy bajos porque orquestación es eficiente, agentes especializados, tareas claras.
-
----
-
-## 📊 TABLA DE PARTICIPACIÓN AGENTE-POR-FASE
-
-| Agente | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | Total |
-|--------|----|----|----|----|----|----|----|----|----|----|
-| **planner** | 🟢 | - | - | - | - | - | - | - | 🟢 | 2 |
-| **architect** | 🟡 | 🟢 | 🟡 | 🟢 | 🟡 | - | 🟡 | - | 🟡 | 6 |
-| **data-architect** | - | - | 🟢 | - | - | - | - | - | 🟡 | 2 |
-| **coder** | - | - | - | 🟡 | 🟢 | 🟢 | 🟡 | 🟡 | 🟡 | 6 |
-| **security-specialist** | - | 🟡 | - | 🟡 | 🟡 | - | 🟡 | - | - | 4 |
-| **ai-specialist** | - | - | - | - | 🟡 | - | 🟢 | - | - | 2 |
-| **ux-designer** | - | - | - | - | - | 🟡 | - | 🟡 | 🟡 | 3 |
-| **tester** | - | - | - | 🟡 | 🟡 | 🟡 | 🟡 | 🟢 | - | 5 |
-| **cost-analyzer** | - | - | - | - | - | - | - | - | 🟡 | 1 |
-| **documenter** | - | 🟡 | 🟡 | - | - | 🟡 | 🟡 | 🟡 | 🟡 | 6 |
-| **tech-researcher** | 🟡 | - | - | - | - | - | - | - | - | 1 |
-| **code-reviewer** | - | - | - | - | 🟡 | 🟡 | 🟡 | - | 🟡 | 4 |
-| **system-analyzer** | - | - | - | 🟡 | - | - | - | 🟡 | - | 2 |
-| **diagram-designer** | - | 🟡 | 🟡 | - | - | - | - | - | - | 2 |
-
-**Leyenda**:
-- 🟢 **Lead** - Agente responsable principal de la fase
-- 🟡 **Secundario** - Agente participante o validador
-- `-` - No participa en esta fase
-
-**Observaciones**:
-- **architect** participa en 6/9 fases (coordinador técnico clave)
-- **coder** participa en 6/9 fases (implementador principal)
-- **documenter** participa en 6/9 fases (documentación continua)
-- **tester** participa en 5/9 fases (QA continuo desde Fase 4)
-- **security-specialist** participa en 4/9 fases (validación continua)
-
----
-
-## 🛠️ ESPECIALIZACIONES TÉCNICAS
-
-### Por Dominio Técnico
-
-**PLANIFICACIÓN & ESTRATEGIA**:
-- planner: Planning, estimación, roadmaps, user stories
-- cost-analyzer: Análisis de costos, optimización, ROI
-
-**ARQUITECTURA & DISEÑO**:
-- architect: Arquitectura de software, ADRs, patrones, componentes
-- data-architect: Data modeling, schema design, migrations, indexing
-- ux-designer: UI/UX design, componentes React, wireframes
-
-**DESARROLLO & IMPLEMENTACIÓN**:
-- coder: Backend + Frontend implementation, TypeScript, Next.js, Prisma
-- ai-specialist: IA/LLMs, RAG, Vercel AI SDK, embeddings, voice agents
-
-**SEGURIDAD & CALIDAD**:
-- security-specialist: Auth, RBAC, rate limiting, security best practices
-- tester: Unit tests, integration tests, E2E tests, QA
-- code-reviewer: Code review, estándares, best practices
-
-**DOCUMENTACIÓN & VISUALIZACIÓN**:
-- documenter: Documentación técnica, API docs, guides
-- diagram-designer: Diagramas Mermaid, ERD, flowcharts, arquitectura
-
-**INVESTIGACIÓN & ANÁLISIS**:
-- tech-researcher: Investigación técnica, comparación de stacks
-- system-analyzer: Análisis de sistemas, performance, validación
-
-**ORQUESTACIÓN (NO TOCAN PROYECTO)**:
-- system-claude: Diseño de orquestación de agentes
-- prompt-engineer: Ingeniería de prompts, validación 1-to-1
-- orchestration-validator: Validación de consistencia
-
----
-
-## 🔄 PROTOCOLO DE COORDINACIÓN
-
-### Patrones de Coordinación
-
-**SECUENCIAL** (A → B → C):
-- Ejemplo: Fase 1 → Fase 2 → Fase 3 → Fase 4 (dependencias claras)
-- Uso: Cuando B necesita output de A
-
-**PARALELO** (A + B + C simultáneamente):
-- Ejemplo: Fase 5 (Backend) + Fase 6 (Frontend) corren en paralelo
-- Uso: Cuando tareas son independientes
-
-**CONDICIONAL** (decisión → caminos diferentes):
-- Ejemplo: Si bug crítico → hotfix inmediato. Si feature → próximo sprint
-- Uso: Cuando necesitas decisión contextual
-
-**ITERATIVO** (implementar → validar → refinar):
-- Ejemplo: coder → tester → si falla, coder refina → tester valida
-- Uso: Cuando necesitas refinamiento hasta calidad
-
-### Handoffs Entre Agentes
-
-**Handoff Exitoso Requiere**:
-1. Entregable completo (según criterios de finalización)
-2. Documentación actualizada
-3. Validación aprobada
-4. Siguiente agente notificado
-
-**Ejemplo de Handoff (Fase 2 → Fase 3)**:
-```
-architect (Fase 2) → Crea ARCHITECTURE.md
-   ↓
-system-analyzer → Valida arquitectura
-   ↓
-HANDOFF APROBADO
-   ↓
-data-architect (Fase 3) → Lee ARCHITECTURE.md
-   ↓
-data-architect → Diseña schema basado en arquitectura
+architect completó:
+  - ARCHITECTURE.md (7-layer architecture)
+  - ADR.md (decisiones arquitectónicas)
+  - Decidió usar App Router (Next.js 15)
+  - Decidió usar Prisma para ORM
+
+coder debe hacer:
+  - Setup Next.js 15 con App Router
+  - Instalar Prisma
+  - Crear estructura de carpetas según ARCHITECTURE.md
+  - Configurar Tailwind CSS v4
+
+Criterios de éxito de coder:
+  - [ ] Next.js 15 instalado y funcional
+  - [ ] Prisma configurado
+  - [ ] Estructura de carpetas correcta
+  - [ ] Tailwind CSS v4 compilando
 ```
 
-### Validación por Fase
+### 8.3 Validación de Handoffs
 
-**Quién Valida Cada Fase**:
-- Fase 1: architect valida requisitos y tech stack
-- Fase 2: Charlie (Owner) valida arquitectura
-- Fase 3: architect valida coherencia con arquitectura
-- Fase 4: system-analyzer + Charlie validan API design
-- Fase 5: architect + tester validan backend implementation
-- Fase 6: ux-designer + tester validan frontend
-- Fase 7: architect + tester validan deployment
-- Fase 8: Charlie + tester validan beta feedback
-- Fase 9: Charlie valida growth strategy
+**CLAUDE valida ANTES de pasar control**:
+- [ ] Agente anterior completó 100% de criterios
+- [ ] Archivos generados están en ubicación correcta
+- [ ] Documentación está actualizada
+- [ ] No hay blockers pendientes
+- [ ] Agente siguiente tiene contexto claro
+
+**Si falta algo**: RE-ABRIR con agente anterior, NO pasar control a siguiente.
 
 ---
 
-## ✅ CRITERIOS DE ÉXITO DE LA ORQUESTACIÓN
+## 9. PROTOCOLO DE MANEJO DE ERRORES Y ESCALACIÓN
 
-**Orquestación es exitosa cuando**:
-- [ ] Cada agente tiene rol y tareas ESPECÍFICAS (no genéricas)
-- [ ] Mapeo agente-a-fase está 100% alineado con PROJECT-ROADMAP.md
-- [ ] Modelos LLM justificados costo-beneficio
-- [ ] Tokens optimizados para máximo rendimiento con mínimo costo
-- [ ] Workflows documentados para cada fase (9 workflows)
-- [ ] Handoffs entre agentes son claros
-- [ ] Validación estratégica (NO duplicada)
-- [ ] Documentación completa en .claude/sys-docs/
-- [ ] Prompts generados por prompt-engineer (basados en docs)
-- [ ] Alineación 1-to-1: documentación ↔ prompts (validado por orchestration-validator)
+### 9.1 Detección de Error
+
+**Cuando agente falla o reporta problema**:
+
+```
+PASO 1: DOCUMENTAR error
+  - ¿Qué agente?
+  - ¿En qué substep?
+  - ¿Error exacto?
+  - ¿Es recoverable?
+
+PASO 2: EVALUAR opciones
+  - ¿Recoverable? → Reintentar (máx 3 veces)
+  - ¿Especialista alterno? → Cambiar agente
+  - ¿Información incompleta? → Solicitar a usuario
+  - ¿Escalación crítica? → Informar usuario inmediatamente
+
+PASO 3: COMUNICAR al usuario
+  - Problema detectado
+  - Opciones disponibles
+  - Recomendación de CLAUDE
+
+PASO 4: USUARIO DECIDE
+  - Ejecutar decisión
+  - Actualizar estado (.claude/task-state.json)
+  - Continuar o escalar
+```
+
+### 9.2 Protocolo de Escalación (4 Niveles)
+
+**NIVEL 1: Reintentar** (si recoverable)
+- Máximo 3 reintentos
+- Esperar 30s-1min entre reintentos
+- Documentar intento en task-state.json
+
+**NIVEL 2: Especialista alterno** (si agente falla)
+- Cambiar a agente con expertise similar
+- Documentar cambio en task-state.json
+- Ejemplo: coder falla → system-analyzer (debugging)
+
+**NIVEL 3: Solicitar información** (si info incompleta)
+- Preguntar al usuario específicamente qué falta
+- Bloquear tarea hasta respuesta
+- Documentar bloqueador en task-state.json
+
+**NIVEL 4: Notificar usuario** (si crítico)
+- Informar problema inmediatamente
+- Presentar opciones
+- Esperar decisión del usuario
+
+### 9.3 Ejemplo de Escalación
+
+**Contexto**: coder falla al integrar Mermaid en Fase 5 (después de 2 reintentos)
+
+```
+NIVEL 1: Reintentar (2 intentos fallidos)
+  ↓
+NIVEL 2: Cambiar a system-analyzer (debugging)
+  - system-analyzer identifica: conflicto de versiones de Mermaid con React 19
+  ↓
+NIVEL 3: Solicitar información
+  - CLAUDE pregunta a usuario: "¿Prefieres downgrade de React 19 o buscar alternativa a Mermaid?"
+  ↓
+Usuario decide: "Busca alternativa"
+  ↓
+NIVEL 2: tech-researcher investiga alternativas
+  - Encuentra: react-mermaid-v2 compatible con React 19
+  ↓
+NIVEL 1: coder reintenta con react-mermaid-v2
+  - ÉXITO
+```
 
 ---
 
-## 📋 PRÓXIMOS PASOS
+## 10. DOCUMENTACIÓN GENERADA POR FASE
 
-**Para completar el rediseño de orquestación**:
-1. ✅ ORCHESTRATION-DESIGN.md creado (este documento)
-2. ⏳ Crear 16 especificaciones de agentes en `agents/`
-3. ⏳ Crear WORKFLOWS.md (patrones de coordinación)
-4. ⏳ Crear 9 workflows de fases en `workflows/`
-5. ⏳ Solicitar a prompt-engineer: Crear/actualizar prompts basados en especificaciones
-6. ⏳ Solicitar a orchestration-validator: Validar integridad 1-to-1
+**Total de documentos estimados**: 40-50 archivos Markdown
+
+### Documentos por Categoría
+
+**Arquitectura** (6 docs):
+- ARCHITECTURE.md
+- ADR.md
+- COMPONENT-INVENTORY.md
+- (+ diagramas Mermaid)
+
+**Diseño** (3 docs):
+- DESIGN-SYSTEM.md
+- (+ componentes base)
+
+**Base de Datos** (6 docs):
+- DB-SCHEMA.md
+- MIGRATION-001-auth-tables.sql
+- MIGRATION-002-projects-table.sql
+- MIGRATION-003-posts-table.sql
+- (+ indexes, relations)
+
+**Autenticación** (3 docs):
+- AUTHENTICATION.md
+- AUTH-ENDPOINTS.md
+- ADMIN-LAYOUT.md
+
+**Páginas Públicas** (4 docs):
+- HOME-PAGE.md
+- CONTACT-PAGE.md
+- NAVIGATION.md
+- SEO-CONFIG.md
+
+**Portfolio** (4 docs):
+- PORTFOLIO-SYSTEM.md
+- PROJECT-ENDPOINTS.md
+- PORTFOLIO-ADMIN.md
+- PORTFOLIO-TESTS.md
+
+**Blog** (6 docs):
+- BLOG-SYSTEM.md
+- MARKDOWN-CONFIG.md
+- POST-ENDPOINTS.md
+- BLOG-ADMIN.md
+- BLOG-TESTS.md
+- MERMAID-INTEGRATION.md
+
+**IA** (5 docs):
+- AI-INTEGRATION.md
+- AI-PROMPTS.md
+- AI-ENDPOINTS.md
+- AI-ADMIN-UI.md
+- AI-COST-ANALYSIS.md
+
+**CMS** (3 docs):
+- CMS-FEATURES.md
+- VERSIONING.md
+- EXPORT.md
+
+**Analíticas y Performance** (5 docs):
+- ANALYTICS-SETUP.md
+- PERFORMANCE-OPTIMIZATION.md
+- CACHING-STRATEGY.md
+- TESTING-FINAL.md
+- DEPLOYMENT-CHECKLIST.md
+
+**Testing** (5 docs):
+- TESTING-AUTH.md
+- RESPONSIVE-TESTS.md
+- PORTFOLIO-TESTS.md
+- BLOG-TESTS.md
+- TESTING-FINAL.md
+
+**Estándares** (2 docs):
+- CODE-STANDARDS.md
+- (+ naming conventions)
 
 ---
 
-**Documento creado por**: system-claude
-**Basado en**: PROJECT-ROADMAP.md (versión 1.0)
-**Última actualización**: 2025-10-22
-**Próxima revisión**: Cuando Fase 4 se complete o haya cambios significativos
+## 11. CRITERIOS DE FINALIZACIÓN DEL PROYECTO
 
-🚀 **Este documento es la base de toda la orquestación del proyecto cjhirashi-agents MVP.**
+**cjhirashi.com está COMPLETO cuando**:
+
+### Fases Completadas (9/9)
+- [ ] Fase 0: Página "En Construcción" ✅ COMPLETADO
+- [ ] Fase 1: Fundación & Diseño ✅ COMPLETADO
+- [ ] Fase 2: Autenticación & Admin Core ✅ COMPLETADO
+- [ ] Fase 3: Sitio Público - Core ✅ COMPLETADO
+- [ ] Fase 4: Sistema de Portafolio ✅ COMPLETADO
+- [ ] Fase 5: Sistema de Blog ✅ COMPLETADO
+- [ ] Fase 6: Asistente IA ✅ COMPLETADO
+- [ ] Fase 7: CMS Customización ✅ COMPLETADO
+- [ ] Fase 8: Analíticas & Polish ✅ COMPLETADO
+
+### Métricas Globales
+- [ ] PageSpeed Insights >= 90 (mobile + desktop)
+- [ ] Test Coverage >= 80% (todos los módulos)
+- [ ] TTFB <= 500ms (Time To First Byte)
+- [ ] Bundle size < 150KB (JS inicial)
+- [ ] Zero breaking bugs en producción
+- [ ] SEO metadata 100% completo
+- [ ] Mobile responsive 100% (375px-1920px)
+- [ ] OWASP Top 10 considerado (security)
+- [ ] CSRF protection implementado
+- [ ] Documentación 100% completa (40-50 docs)
+
+### Validaciones Finales
+- [ ] Charlie valida y aprueba diseño
+- [ ] Charlie valida y aprueba funcionalidad
+- [ ] Deployment a cjhirashi.com exitoso
+- [ ] Monitoreo post-deployment estable (24h)
+- [ ] PROJECT-ROADMAP.md actualizado a 100%
+
+---
+
+## 12. PRÓXIMOS PASOS (IMPLEMENTACIÓN)
+
+### 12.1 Creación de Especificaciones de Agentes
+
+**system-claude (yo) debe crear/actualizar**:
+- `.claude/sys-docs/agents/planner-agent-spec.md`
+- `.claude/sys-docs/agents/architect-agent-spec.md`
+- `.claude/sys-docs/agents/data-architect-agent-spec.md`
+- `.claude/sys-docs/agents/security-specialist-agent-spec.md`
+- `.claude/sys-docs/agents/ux-designer-agent-spec.md`
+- `.claude/sys-docs/agents/coder-agent-spec.md`
+- `.claude/sys-docs/agents/ai-specialist-agent-spec.md`
+- `.claude/sys-docs/agents/tester-agent-spec.md`
+- `.claude/sys-docs/agents/cost-analyzer-agent-spec.md`
+- `.claude/sys-docs/agents/documenter-agent-spec.md`
+- `.claude/sys-docs/agents/tech-researcher-agent-spec.md`
+- `.claude/sys-docs/agents/code-reviewer-agent-spec.md`
+- `.claude/sys-docs/agents/system-analyzer-agent-spec.md`
+- `.claude/sys-docs/agents/diagram-designer-agent-spec.md`
+
+(14 especificaciones de agentes de proyecto)
+
+### 12.2 Solicitud a prompt-engineer
+
+**Después de crear especificaciones**:
+- Solicitar a prompt-engineer: "Crea/actualiza prompts basados en las 14 especificaciones creadas"
+- prompt-engineer lee specs → crea prompts en `.claude/agents/`
+- Validar integridad 1-to-1 (docs ↔ prompts)
+
+### 12.3 Validación con orchestration-validator
+
+**Después de prompts creados**:
+- Solicitar a orchestration-validator: "Valida consistencia del sistema de orquestación"
+- orchestration-validator genera reporte
+- Corregir discrepancias si existen
+
+### 12.4 Reporte al Usuario (Charlie)
+
+**Después de validación**:
+- Presentar resumen ejecutivo de orquestación
+- Agentes clave por fase
+- Costos estimados LLM
+- Estado de validación
+- Solicitar aprobación para iniciar Fase 0
+
+---
+
+## 13. RESUMEN EJECUTIVO PARA CHARLIE
+
+**Orquestación Diseñada para cjhirashi.com**:
+
+### Equipo
+- 14 agentes de proyecto (desarrollo)
+- 3 agentes de orquestación (diseño, prompts, validación)
+
+### Distribución LLM
+- 4 agentes Haiku (ahorro de costos ~75%)
+- 10 agentes Sonnet (calidad máxima donde importa)
+
+### Timeline
+- 4-5 semanas (compatible con roadmap)
+- 181-240 horas estimadas
+- Con buffer 20%: 217-288 horas
+
+### Costos LLM Estimados
+- Haiku: $0.52-$0.67
+- Sonnet: $11.25-$15.12
+- **TOTAL: $12-$16 (para TODO el proyecto)**
+- Ahorro vs solo Sonnet: ~75% ($45-$60 ahorrados)
+
+### Fases con Paralelización
+- Fase 1: architect + ux-designer + coder (simultáneos)
+- Fases 4-5-6: Portfolio + Blog + IA (pueden correr en paralelo)
+
+### 4 Modos de Operación
+- MODO 1: DESARROLLO (Fases 0-8) - 4-5 semanas
+- MODO 2: FEATURE (nueva funcionalidad) - 3-14 días
+- MODO 3: EMERGENCIA (bug crítico) - SLA 4 horas
+- MODO 4: OPTIMIZACIÓN (performance) - 3-7 días
+
+### Documentación Esperada
+- 40-50 archivos Markdown
+- Arquitectura, diseño, API, testing, deployment
+- Actualización continua de PROJECT-ROADMAP.md
+
+### Próximo Paso
+- Aprobar esta orquestación
+- system-claude crea especificaciones de 14 agentes
+- prompt-engineer crea prompts basados en specs
+- orchestration-validator valida consistencia
+- Iniciar Fase 0 (Página "En Construcción")
+
+---
+
+**Estado**: Orquestación DISEÑADA, pendiente de aprobación de Charlie.
+
+**Siguiente Acción**: Crear especificaciones de agentes → solicitar prompts → validar → iniciar Fase 0.
+
+---
+
+**Versión 1.0 - Creado 2025-10-25 por system-claude (Sonnet)**
