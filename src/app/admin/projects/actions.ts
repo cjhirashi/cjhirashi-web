@@ -22,6 +22,7 @@ export async function createProject(formData: FormData) {
     const link = formData.get("link") as string
     const githubLink = formData.get("githubLink") as string
     const tagsString = formData.get("tags") as string
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
     const published = formData.get("published") === "on"
 
     await prisma.project.create({
@@ -33,7 +34,7 @@ export async function createProject(formData: FormData) {
             imageUrl: imageUrl || null,
             link: link || null,
             githubLink: githubLink || null,
-            tags: tagsString,
+            tags,
             published,
         },
     })
@@ -55,6 +56,7 @@ export async function updateProject(id: string, formData: FormData) {
     const link = formData.get("link") as string
     const githubLink = formData.get("githubLink") as string
     const tagsString = formData.get("tags") as string
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
     const published = formData.get("published") === "on"
 
     await prisma.project.update({
@@ -67,7 +69,7 @@ export async function updateProject(id: string, formData: FormData) {
             imageUrl: imageUrl || null,
             link: link || null,
             githubLink: githubLink || null,
-            tags: tagsString,
+            tags,
             published,
         },
     })

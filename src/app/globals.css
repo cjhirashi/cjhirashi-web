@@ -97,10 +97,15 @@
   --card-foreground: hsl(222.2 84% 4.9%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(222.2 84% 4.9%);
-  --primary: hsl(222.2 47.4% 11.2%);
+
+  /* Primary - Blue */
+  --primary: hsl(221.2 83.2% 53.3%);
   --primary-foreground: hsl(210 40% 98%);
-  --secondary: hsl(210 40% 96.1%);
-  --secondary-foreground: hsl(222.2 47.4% 11.2%);
+
+  /* Secondary - Purple */
+  --secondary: hsl(262.1 83.3% 57.8%);
+  --secondary-foreground: hsl(210 40% 98%);
+
   --muted: hsl(210 40% 96.1%);
   --muted-foreground: hsl(215.4 16.3% 46.9%);
   --accent: hsl(210 40% 96.1%);
@@ -109,7 +114,7 @@
   --destructive-foreground: hsl(210 40% 98%);
   --border: hsl(220 13% 95%);
   --input: hsl(220 13% 95%);
-  --ring: hsl(222.2 84% 4.9%);
+  --ring: hsl(221.2 83.2% 53.3%);
   --radius: 0.5rem;
   --chart-1: hsl(12 76% 61%);
   --chart-2: hsl(173 58% 39%);
@@ -125,10 +130,15 @@
   --card-foreground: hsl(210 40% 98%);
   --popover: hsl(222.2 84% 4.9%);
   --popover-foreground: hsl(210 40% 98%);
-  --primary: hsl(210 40% 98%);
+
+  /* Primary - Blue (Lighter for dark mode) */
+  --primary: hsl(217.2 91.2% 59.8%);
   --primary-foreground: hsl(222.2 47.4% 11.2%);
-  --secondary: hsl(217.2 32.6% 17.5%);
+
+  /* Secondary - Purple */
+  --secondary: hsl(263.4 70% 50.4%);
   --secondary-foreground: hsl(210 40% 98%);
+
   --muted: hsl(217.2 32.6% 17.5%);
   --muted-foreground: hsl(215 20.2% 65.1%);
   --accent: hsl(217.2 32.6% 17.5%);

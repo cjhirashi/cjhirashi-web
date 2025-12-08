@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -64,7 +64,7 @@ model Project {
   description String
   content     String
   imageUrl    String?
-  tags        String // SQLite does not support String[]
+  tags        String[]
   link        String?
   githubLink  String?
   published   Boolean  @default(false)
@@ -79,10 +79,34 @@ model Post {
   excerpt     String?
   content     String
   coverImage  String?
-  tags        String // SQLite does not support String[]
+  tags        String[]
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  content     String
+  location    String?
+  date        DateTime
+  imageUrl    String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model HomeSection {
+  id        String   @id @default(cuid())
+  type      String   // E.g., "HERO", "ABOUT", "FEATURES", "BLOG_FEED", "PROJECT_FEED", "EVENT_FEED", "CTA"
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  content   Json     // Stores fields specific to the type (title, subtitle, image, links, etc.)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -35,7 +35,7 @@ export default async function ProjectsPage() {
                             <p className="text-muted-foreground">{project.description}</p>
                             {project.tags && (
                                 <div className="mt-4 flex flex-wrap gap-2">
-                                    {project.tags.split(",").map((tag) => (
+                                    {project.tags.map((tag) => (
                                         <span
                                             key={tag}
                                             className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground"

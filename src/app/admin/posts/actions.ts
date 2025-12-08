@@ -27,12 +27,8 @@ export async function createPost(formData: FormData) {
     const content = formData.get("content") as string
     const excerpt = formData.get("excerpt") as string
     const tagsString = formData.get("tags") as string
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
     const published = formData.get("published") === "on"
-
-    // SQLite does not support String[], so we store tags as a comma-separated string
-    // But the schema expects String for tags now (based on my previous fix)
-    // Wait, if I changed tags to String in schema, I should store it as string.
-    // Let's assume tags is just a string in the DB for now.
 
     await prisma.post.create({
         data: {
@@ -40,7 +36,7 @@ export async function createPost(formData: FormData) {
             slug: slugify(title),
             content,
             excerpt,
-            tags: tagsString, // Storing as simple string for SQLite
+            tags,
             published,
             authorId: user.id,
         },
@@ -60,6 +56,7 @@ export async function updatePost(id: string, formData: FormData) {
     const content = formData.get("content") as string
     const excerpt = formData.get("excerpt") as string
     const tagsString = formData.get("tags") as string
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
     const published = formData.get("published") === "on"
 
     await prisma.post.update({
@@ -69,7 +66,7 @@ export async function updatePost(id: string, formData: FormData) {
             slug: slugify(title),
             content,
             excerpt,
-            tags: tagsString,
+            tags,
             published,
         },
     })

@@ -1,5 +1,5 @@
 import { signIn } from '@/lib/auth'
-import { redirect } from 'next/navigation'
+
 
 export default function LoginPage() {
     async function handleLogin(formData: FormData) {

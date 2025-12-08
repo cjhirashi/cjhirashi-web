@@ -10,8 +10,10 @@ import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
 
 const navItems = [
+    { name: "Inicio", href: "/" },
     { name: "Blog", href: "/blog" },
     { name: "Portafolio", href: "/projects" },
+    { name: "Eventos", href: "/events" },
     { name: "Contacto", href: "/contact" },
 ]
 
