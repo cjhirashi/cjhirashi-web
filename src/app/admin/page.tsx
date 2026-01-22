@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { FileText, FolderKanban } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
-const prisma = new PrismaClient()
 
 async function getStats() {
     const [postsCount, projectsCount] = await Promise.all([

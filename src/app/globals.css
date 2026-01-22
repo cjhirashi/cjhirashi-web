@@ -98,13 +98,13 @@
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(222.2 84% 4.9%);
 
-  /* Primary - Blue */
-  --primary: hsl(221.2 83.2% 53.3%);
-  --primary-foreground: hsl(210 40% 98%);
+  /* Primary - Indigo */
+  --primary: 243.4 75.4% 58.6%;
+  --primary-foreground: 210 40% 98%;
 
-  /* Secondary - Purple */
-  --secondary: hsl(262.1 83.3% 57.8%);
-  --secondary-foreground: hsl(210 40% 98%);
+  /* Secondary - Indigo 200 */
+  --secondary: 235.8 100% 88.8%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
 
   --muted: hsl(210 40% 96.1%);
   --muted-foreground: hsl(215.4 16.3% 46.9%);
@@ -124,12 +124,12 @@
 }
 
 .dark {
-  --background: hsl(222.2 84% 4.9%);
-  --foreground: hsl(210 40% 98%);
-  --card: hsl(222.2 84% 4.9%);
-  --card-foreground: hsl(210 40% 98%);
+  --background: hsl(240, 10%, 4%);
+  --foreground: hsl(240, 5%, 65%);
+  --card: hsl(240, 6%, 10%);
+  --card-foreground: hsl(240, 5%, 65%);
   --popover: hsl(222.2 84% 4.9%);
-  --popover-foreground: hsl(210 40% 98%);
+  --popover-foreground: hsl(240, 5%, 65%);
 
   /* Primary - Blue (Lighter for dark mode) */
   --primary: hsl(217.2 91.2% 59.8%);
@@ -162,5 +162,14 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  .hero-pattern {
+    background-image: radial-gradient(#e0e7ff 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .dark .hero-pattern {
+    background-image: radial-gradient(#1e293b 1px, transparent 1px);
   }
 }

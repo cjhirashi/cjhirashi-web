@@ -19,7 +19,7 @@ import {
 import { getSections, deleteSection } from "./actions"
 
 export default async function HomeBuilderPage() {
-    const sections = await getSections()
+    const sections = await getSections('HOME')
 
     return (
         <div className="space-y-8">

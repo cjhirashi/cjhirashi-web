@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { updateProject } from "../../actions"
 import { ProjectForm } from "@/components/admin/project-form"
-
-const prisma = new PrismaClient()
 
 interface EditProjectPageProps {
     params: Promise<{

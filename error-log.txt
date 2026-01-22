@@ -1,0 +1,5 @@
+src/components/admin/home-section-form.tsx(98,23): error TS2345: Argument of type '{ title: string; description: string; link: string; icon: string; image: string; role: string; year: string; }' is not assignable to parameter of type 'SetStateAction<{ title: string; description: string; link: string; icon: string; image: string; role: string; year: string; value: string; label: string; linkedin: string; }>'.
+  Type '{ title: string; description: string; link: string; icon: string; image: string; role: string; year: string; }' is missing the following properties from type '{ title: string; description: string; link: string; icon: string; image: string; role: string; year: string; value: string; label: string; linkedin: string; }': value, label, linkedin
+src/components/admin/home-section-form.tsx(328,131): error TS1345: An expression of type 'void' cannot be tested for truthiness.
+src/components/admin/settings-form.tsx(50,20): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/admin/settings-form.tsx(54,18): error TS7006: Parameter 'prev' implicitly has an 'any' type.

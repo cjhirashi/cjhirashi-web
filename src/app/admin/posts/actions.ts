@@ -2,12 +2,10 @@
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 
 import { slugify } from "@/lib/utils"
-
-const prisma = new PrismaClient()
 
 export async function createPost(formData: FormData) {
     const session = await auth()
@@ -29,6 +27,17 @@ export async function createPost(formData: FormData) {
     const tagsString = formData.get("tags") as string
     const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
     const published = formData.get("published") === "on"
+    const publishedAtString = formData.get("publishedAt") as string
+    let publishedAt = publishedAtString ? new Date(publishedAtString) : null
+    const coverImage = formData.get("coverImage") as string
+    const category = formData.get("category") as string
+    const featured = formData.get("featured") === "true"
+
+    if (published && !publishedAt) {
+        publishedAt = new Date()
+    } else if (!published) {
+        publishedAt = null
+    }
 
     await prisma.post.create({
         data: {
@@ -38,6 +47,10 @@ export async function createPost(formData: FormData) {
             excerpt,
             tags,
             published,
+            publishedAt,
+            coverImage,
+            category,
+            featured,
             authorId: user.id,
         },
     })
@@ -58,6 +71,17 @@ export async function updatePost(id: string, formData: FormData) {
     const tagsString = formData.get("tags") as string
     const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
     const published = formData.get("published") === "on"
+    const publishedAtString = formData.get("publishedAt") as string
+    let publishedAt = publishedAtString ? new Date(publishedAtString) : null
+    const coverImage = formData.get("coverImage") as string
+    const category = formData.get("category") as string
+    const featured = formData.get("featured") === "true"
+
+    if (published && !publishedAt) {
+        publishedAt = new Date()
+    } else if (!published) {
+        publishedAt = null
+    }
 
     await prisma.post.update({
         where: { id },
@@ -68,6 +92,10 @@ export async function updatePost(id: string, formData: FormData) {
             excerpt,
             tags,
             published,
+            publishedAt,
+            coverImage,
+            category,
+            featured,
         },
     })
 

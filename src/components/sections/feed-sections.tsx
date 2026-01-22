@@ -1,11 +1,9 @@
 import Link from "next/link"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { ArrowRight, Calendar, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { formatDate } from "@/lib/utils"
-
-const prisma = new PrismaClient()
 
 interface SectionProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

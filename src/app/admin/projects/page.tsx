@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { Plus, MoreHorizontal, Pencil, Trash, Github, ExternalLink } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -20,7 +20,7 @@ import {
 import { formatDate } from "@/lib/utils"
 import { deleteProject } from "./actions"
 
-const prisma = new PrismaClient()
+
 
 export default async function ProjectsPage() {
     const projects = await prisma.project.findMany({
@@ -79,8 +79,8 @@ export default async function ProjectsPage() {
                                 <TableCell>
                                     <span
                                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${project.published
-                                                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                                                : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+                                            ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                                            : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
                                             }`}
                                     >
                                         {project.published ? "Published" : "Draft"}

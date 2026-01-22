@@ -2,12 +2,10 @@
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 
 import { slugify } from "@/lib/utils"
-
-const prisma = new PrismaClient()
 
 export async function createProject(formData: FormData) {
     const session = await auth()
@@ -23,6 +21,11 @@ export async function createProject(formData: FormData) {
     const githubLink = formData.get("githubLink") as string
     const tagsString = formData.get("tags") as string
     const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
+    const tech = formData.get("tech") as string
+    const category = formData.get("category") as string
+    const label = formData.get("label") as string
+    const iconLabel = formData.get("iconLabel") as string
+    const iconKey = formData.get("iconKey") as string
     const published = formData.get("published") === "on"
 
     await prisma.project.create({
@@ -35,6 +38,11 @@ export async function createProject(formData: FormData) {
             link: link || null,
             githubLink: githubLink || null,
             tags,
+            tech,
+            category,
+            label,
+            iconLabel,
+            iconKey,
             published,
         },
     })
@@ -57,6 +65,11 @@ export async function updateProject(id: string, formData: FormData) {
     const githubLink = formData.get("githubLink") as string
     const tagsString = formData.get("tags") as string
     const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
+    const tech = formData.get("tech") as string
+    const category = formData.get("category") as string
+    const label = formData.get("label") as string
+    const iconLabel = formData.get("iconLabel") as string
+    const iconKey = formData.get("iconKey") as string
     const published = formData.get("published") === "on"
 
     await prisma.project.update({
@@ -70,6 +83,11 @@ export async function updateProject(id: string, formData: FormData) {
             link: link || null,
             githubLink: githubLink || null,
             tags,
+            tech,
+            category,
+            label,
+            iconLabel,
+            iconKey,
             published,
         },
     })

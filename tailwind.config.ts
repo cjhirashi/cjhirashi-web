@@ -9,47 +9,51 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Primary - Purple palette
+        gold: { DEFAULT: '#D4AF37', light: '#F4D06F' },
+        // Primary - Mapped to CSS Variable
         primary: {
-          DEFAULT: '#9D4EDD',
-          50: '#F3E8FF',
-          100: '#E9D5FF',
-          200: '#D8B4FE',
-          300: '#C084FC',
-          400: '#A855F7',
-          500: '#9D4EDD',
-          600: '#7C3AED',
-          700: '#6D28D9',
-          800: '#5B21B6',
-          900: '#4C1D95',
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
         },
-        // Accent - Cyan/Blue palette
+        // Secondary - Mapped to CSS Variable
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
         accent: {
-          DEFAULT: '#3B82F6',
-          50: '#EFF6FF',
-          100: '#DBEAFE',
-          200: '#BFDBFE',
-          300: '#93C5FD',
-          400: '#60A5FA',
-          500: '#3B82F6',
-          600: '#2563EB',
-          700: '#1D4ED8',
-          800: '#1E40AF',
-          900: '#1E3A8A',
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
         },
-        // Background - Dark theme
-        background: {
-          DEFAULT: '#0f1419',
-          lighter: '#1a1f2e',
-          card: '#1e2433',
+        // Background - Variable
+        background: 'var(--background)',
+        // Standard shadcn-like names often used
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        foreground: "var(--foreground)",
+      },
+      animation: {
+        'infinite-scroll': 'infinite-scroll 25s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-fira-code)', 'monospace'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
+        serif: ['var(--font-serif)', 'serif'],
       },
     },
   },
+
   plugins: [
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),

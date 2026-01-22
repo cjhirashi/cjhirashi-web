@@ -65,6 +65,11 @@ model Project {
   content     String
   imageUrl    String?
   tags        String[]
+  tech        String?  // Space separated keywords for search: "python tensorflow ai"
+  category    String?  // "datascience", "webdev", "mobile"
+  label       String?  // Badge text: "AI Model", "SaaS"
+  iconLabel   String?  // Text next to icon: "TensorFlow"
+  iconKey     String?  // Key for Lucide icon: "Terminal", "Code", "Smartphone"
   link        String?
   githubLink  String?
   published   Boolean  @default(false)
@@ -80,7 +85,10 @@ model Post {
   content     String
   coverImage  String?
   tags        String[]
+  category    String?  @default("General")
+  featured    Boolean  @default(false)
   published   Boolean  @default(false)
+  publishedAt DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   authorId    String
@@ -109,4 +117,15 @@ model HomeSection {
   content   Json     // Stores fields specific to the type (title, subtitle, image, links, etc.)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id          String   @id @default(cuid())
+  siteName    String   @default("Nexus Web")
+  description String   @default("A modern modular website.")
+  logoUrl     String?
+  faviconUrl  String?
+  socials     Json?
+  theme       Json?
+  updatedAt   DateTime @updatedAt
 }

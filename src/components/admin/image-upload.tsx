@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useId } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,6 +14,7 @@ interface ImageUploadProps {
 }
 
 export function ImageUpload({ value, onChange, label = "Image" }: ImageUploadProps) {
+    const id = useId()
     const [isUploading, setIsUploading] = useState(false)
 
     async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -70,7 +71,7 @@ export function ImageUpload({ value, onChange, label = "Image" }: ImageUploadPro
                         type="button"
                         variant="secondary"
                         disabled={isUploading}
-                        onClick={() => document.getElementById("file-upload")?.click()}
+                        onClick={() => document.getElementById(id)?.click()}
                     >
                         {isUploading ? (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -80,7 +81,7 @@ export function ImageUpload({ value, onChange, label = "Image" }: ImageUploadPro
                         Upload Image
                     </Button>
                     <Input
-                        id="file-upload"
+                        id={id}
                         type="file"
                         accept="image/*"
                         className="hidden"

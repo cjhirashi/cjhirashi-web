@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { Plus, MoreHorizontal, Pencil, Trash } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -20,7 +20,7 @@ import {
 import { formatDate } from "@/lib/utils"
 import { deletePost } from "./actions"
 
-const prisma = new PrismaClient()
+
 
 export default async function PostsPage() {
     const posts = await prisma.post.findMany({
@@ -57,14 +57,23 @@ export default async function PostsPage() {
                                 <TableCell>
                                     <span
                                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${post.published
-                                                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                                                : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+                                            ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                                            : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
                                             }`}
                                     >
                                         {post.published ? "Published" : "Draft"}
                                     </span>
                                 </TableCell>
-                                <TableCell>{formatDate(post.createdAt)}</TableCell>
+                                <TableCell>
+                                    <div className="flex flex-col gap-0.5">
+                                        <span>{formatDate(post.publishedAt || post.createdAt)}</span>
+                                        {post.publishedAt && (
+                                            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                                                {new Date(post.publishedAt) > new Date() ? "Scheduled" : "Published"}
+                                            </span>
+                                        )}
+                                    </div>
+                                </TableCell>
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>

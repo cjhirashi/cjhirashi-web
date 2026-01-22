@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { updatePost } from "../../actions"
 import { PostForm } from "@/components/admin/post-form"
-
-const prisma = new PrismaClient()
 
 interface EditPostPageProps {
     params: Promise<{
