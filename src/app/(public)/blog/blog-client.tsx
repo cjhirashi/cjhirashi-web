@@ -3,15 +3,23 @@
 import { useState, useMemo } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, ArrowRight, Clock, Calendar, Mail, CheckCircle2 } from "lucide-react"
+import { Search, ArrowRight, Clock, Calendar, Mail, CheckCircle2, SearchX } from "lucide-react"
 import { Post, User } from "@prisma/client"
 import { formatDate } from "@/lib/utils"
 
 interface BlogClientProps {
-    posts: (Post & { author: User })[]
+    posts: (Omit<Post, 'tags'> & { tags: string, author: User })[]
 }
 
-export function BlogClient({ posts }: BlogClientProps) {
+export function BlogClient({ posts: rawPosts }: BlogClientProps) {
+    // Parse tags for all posts
+    const posts = useMemo(() => {
+        return rawPosts.map(post => ({
+            ...post,
+            tags: post.tags ? post.tags.split(',').filter(Boolean) : []
+        }))
+    }, [rawPosts])
+
     const [filter, setFilter] = useState("Recientes")
     const [searchTerm, setSearchTerm] = useState("")
     const [email, setEmail] = useState("")
@@ -43,9 +51,8 @@ export function BlogClient({ posts }: BlogClientProps) {
 
             const matchesCategory =
                 filter === "Recientes" ||
-                post.tags.some(tag => tag.toLowerCase() === filter.toLowerCase()) ||
-                (filter === "Tutoriales Dev" && (post.tags.includes("Dev") || post.tags.includes("Tutorial"))) || // Example mapping
-                (filter === "Carrera & Soft Skills" && (post.tags.includes("Carrera") || post.tags.includes("Soft Skills")))
+                post.category === filter ||
+                post.tags.includes(filter) // Case insensitive check if needed: post.tags.some(t => t.toLowerCase() === filter.toLowerCase())
 
             const matchesSearch =
                 post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -56,12 +63,12 @@ export function BlogClient({ posts }: BlogClientProps) {
         })
     }, [filter, searchTerm, remainingPosts])
 
-    const categories = [
-        "Recientes",
-        "Tutoriales Dev",
-        "Data Science",
-        "Carrera & Soft Skills"
-    ]
+    const categories = useMemo(() => {
+        // Extract unique categories from posts
+        const uniqueCategories = Array.from(new Set(posts.map(p => p.category).filter(Boolean))) as string[]
+        // Add "Recientes" (All) at the beginning
+        return ["Recientes", ...uniqueCategories]
+    }, [posts])
 
     return (
         <div className="min-h-screen flex flex-col bg-surface dark:bg-slate-950 transition-colors duration-300 font-sans">
@@ -225,6 +232,36 @@ export function BlogClient({ posts }: BlogClientProps) {
                             ))}
                         </AnimatePresence>
                     </div>
+                    {filteredPosts.length === 0 && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="col-span-full py-24 flex flex-col items-center justify-center text-center space-y-4"
+                        >
+                            <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-full mb-2">
+                                <SearchX className="h-10 w-10 text-slate-400 dark:text-slate-500" />
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                                {posts.length === 0 ? "No hay artículos publicados" : "No se encontraron resultados"}
+                            </h3>
+                            <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+                                {posts.length === 0
+                                    ? "Pronto publicaré nuevos tutoriales y artículos. ¡Vuelve más tarde!"
+                                    : `No hay artículos que coincidan con "${searchTerm}" en esta categoría.`}
+                            </p>
+                            {posts.length > 0 && (
+                                <button
+                                    onClick={() => {
+                                        setFilter("Recientes")
+                                        setSearchTerm("")
+                                    }}
+                                    className="mt-4 px-6 py-2 rounded-full bg-primary/10 text-primary font-medium hover:bg-primary/20 transition-colors"
+                                >
+                                    Limpiar filtros
+                                </button>
+                            )}
+                        </motion.div>
+                    )}
                 </div>
             </main>
 

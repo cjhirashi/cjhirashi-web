@@ -17,6 +17,8 @@ import { createSection, updateSection } from '@/app/admin/home/actions' // eslin
 import { ImageUpload } from '@/components/admin/image-upload' // eslint-disable-line
 import { Trash, Plus, ArrowUpRight } from 'lucide-react' // eslint-disable-line
 import { DynamicIcon } from '@/components/ui/dynamic-icon' // eslint-disable-line
+import { TooltipSimple } from '@/components/ui/tooltip-simple'
+
 
 interface HomeSectionFormProps {
     initialData?: {
@@ -108,10 +110,11 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
 
     const SECTION_TYPES = category === 'HOME' ? [
         { value: 'HERO', label: 'Hero Section' },
+        { value: 'TECH_STACK', label: 'Tech Stack / Logos' },
         { value: 'FEATURES', label: 'Features Grid' },
         { value: 'BLOG_FEED', label: 'Latest Blog Posts' },
         { value: 'PROJECT_FEED', label: 'Featured Projects' },
-        { value: 'EVENT_FEED', label: 'Upcoming Events' },
+
         { value: 'CTA', label: 'Call to Action' },
         { value: 'LOGOS', label: 'Logos / Trust' },
         { value: 'SERVICES', label: 'Services (Nexus)' },
@@ -136,7 +139,7 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
             <div className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                        <Label htmlFor="type">Section Type</Label>
+                        <Label htmlFor="type">Tipo de Sección</Label>
                         <Select name="type" value={type} onValueChange={setType}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select type" />
@@ -154,7 +157,7 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
                     <div className="space-y-2 flex flex-col justify-end pb-2">
                         <div className="flex items-center space-x-2">
                             <Switch id="isActive" name="isActive" defaultChecked={initialData?.isActive ?? true} />
-                            <Label htmlFor="isActive">Active (Visible)</Label>
+                            <Label htmlFor="isActive">Activa (Visible)</Label>
                         </div>
                     </div>
                 </div>
@@ -165,142 +168,137 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
 
                         {(type === 'HERO' || type === 'ABOUT_HERO') && (
                             <>
+                                <input type="hidden" name="content_variant" value="BUSINESS" />
                                 <div className="space-y-2">
-                                    <Label>Hero Style Variant</Label>
-                                    <Select name="content_variant" defaultValue={content.variant || 'BUSINESS'} onValueChange={(val) => updateContent('variant', val)}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select variant" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="BUSINESS">Business (Corporate 2.0)</SelectItem>
-                                            <SelectItem value="DEV">Developer (Terminal / Tech)</SelectItem>
-                                            <SelectItem value="RESTAURANT">Restaurant (Luxury / Serif)</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <input type="hidden" name="content_variant" value={content.variant || 'BUSINESS'} />
+                                    <div className="flex items-center">
+                                        <Label>Título Principal (Headline)</Label>
+                                        <TooltipSimple text="El texto grande principal. Puedes usar HTML como <br /> para saltos de línea." />
+                                    </div>
+                                    <Input name="content_headline" defaultValue={content.headline} placeholder="ej. Construyendo el Futuro" required />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Headline</Label>
-                                    <Input name="content_headline" defaultValue={content.headline} placeholder="e.g. Building the Future" required />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Subheadline</Label>
-                                    <Input name="content_subheadline" defaultValue={content.subheadline} placeholder="e.g. Full Stack Developer & AI Enthusiast" />
+                                    <div className="flex items-center">
+                                        <Label>Subtítulo</Label>
+                                        <TooltipSimple text="Texto descriptivo debajo del título. Ideal para tu cargo o slogan corto." />
+                                    </div>
+                                    <Input name="content_subheadline" defaultValue={content.subheadline} placeholder="ej. Desarrollador Full Stack & Entusiasta de IA" />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4 border-t pt-4 border-b pb-4 my-4">
                                     <div className="space-y-2">
-                                        <Label className="font-semibold text-primary">1. Background Image</Label>
-                                        <ImageUpload
-                                            value={content.imageUrl}
-                                            onChange={(url) => updateContent('imageUrl', url)}
-                                        />
-                                        <input type="hidden" name="content_imageUrl" value={content.imageUrl || ''} />
-                                        <p className="text-xs text-muted-foreground">Sets the full-screen background.</p>
+                                        <div className="space-y-2">
+                                            <Label className="font-semibold text-primary">1. Imagen de Fondo</Label>
+                                            <ImageUpload
+                                                value={content.imageUrl}
+                                                onChange={(url) => updateContent('imageUrl', url)}
+                                            />
+                                            <input type="hidden" name="content_imageUrl" value={content.imageUrl || ''} />
+                                            <p className="text-xs text-muted-foreground">Ocupa toda la pantalla de fondo.</p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="font-semibold text-primary">2. Imagen Frontal / Contenido</Label>
+                                            <ImageUpload
+                                                value={content.foregroundImageUrl}
+                                                onChange={(url) => updateContent('foregroundImageUrl', url)}
+                                            />
+                                            <input type="hidden" name="content_foregroundImageUrl" value={content.foregroundImageUrl || ''} />
+                                            <p className="text-xs text-muted-foreground">Dev: Imagen Terminal | Negocios: Foto lateral</p>
+                                        </div>
                                     </div>
-                                    <div className="space-y-2">
-                                        <Label className="font-semibold text-primary">2. Foreground/Content Image</Label>
-                                        <ImageUpload
-                                            value={content.foregroundImageUrl}
-                                            onChange={(url) => updateContent('foregroundImageUrl', url)}
-                                        />
-                                        <input type="hidden" name="content_foregroundImageUrl" value={content.foregroundImageUrl || ''} />
-                                        <p className="text-xs text-muted-foreground">Dev: Terminal Image | Business: Side Visual</p>
-                                    </div>
-                                </div>
 
-                                <div className="space-y-4 border p-4 rounded-md bg-muted/30">
-                                    <h4 className="font-semibold text-sm text-primary">Floating Card Config (Business Variant)</h4>
-                                    <div className="grid grid-cols-3 gap-4">
-                                        <div className="space-y-2">
-                                            <Label>Icon Name</Label>
-                                            <Input name="content_cardIcon" defaultValue={content.cardIcon} placeholder="e.g. Activity, Users..." />
-                                            <p className="text-[10px] text-muted-foreground">
-                                                <a href="https://lucide.dev/icons" target="_blank" className="underline hover:text-primary">Lucide Gallery</a>
-                                            </p>
+                                    <div className="space-y-4 border p-4 rounded-md bg-muted/30">
+                                        <h4 className="font-semibold text-sm text-primary">Configuración Tarjeta Flotante (Solo Negocios)</h4>
+                                        <div className="grid grid-cols-3 gap-4">
+                                            <div className="space-y-2">
+                                                <div className="flex items-center">
+                                                    <Label>Nombre Ícono</Label>
+                                                    <TooltipSimple text="Nombre del ícono de Lucide React (ej. Activity)." />
+                                                </div>
+                                                <Input name="content_cardIcon" defaultValue={content.cardIcon} placeholder="ej. Activity, Users..." />
+                                                <p className="text-[10px] text-muted-foreground">
+                                                    <a href="https://lucide.dev/icons" target="_blank" className="underline hover:text-primary">Galería Lucide</a>
+                                                </p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <div className="flex items-center">
+                                                    <Label>Texto Etiqueta</Label>
+                                                    <TooltipSimple text="Texto pequeño descripción en la tarjeta." />
+                                                </div>
+                                                <Input name="content_cardLabel" defaultValue={content.cardLabel} placeholder="ej. Crecimiento" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <div className="flex items-center">
+                                                    <Label>Texto Valor</Label>
+                                                    <TooltipSimple text="El número o valor principal resaltado." />
+                                                </div>
+                                                <Input name="content_cardValue" defaultValue={content.cardValue} placeholder="ej. +500%" />
+                                            </div>
                                         </div>
-                                        <div className="space-y-2">
-                                            <Label>Label Text</Label>
-                                            <Input name="content_cardLabel" defaultValue={content.cardLabel} placeholder="e.g. Growth" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label>Value Text</Label>
-                                            <Input name="content_cardValue" defaultValue={content.cardValue} placeholder="e.g. +500%" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-3 gap-4">
-                                    <div className="space-y-2">
-                                        <Label>Badge Text</Label>
-                                        <Input name="content_badge" defaultValue={content.badge} placeholder="e.g. New Release" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>Badge Link (Optional)</Label>
-                                        <Input name="content_badgeLink" defaultValue={content.badgeLink} placeholder="e.g. /blog/new-release" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>Badge Icon (Optional)</Label>
-                                        <Input name="content_badgeIcon" defaultValue={content.badgeIcon} placeholder="e.g. Bell" />
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-3 gap-4">
                                     <div className="space-y-2">
-                                        <Label>Primary CTA Text</Label>
-                                        <Input name="content_ctaText" defaultValue={content.ctaText} placeholder="e.g. Get Started" />
+                                        <div className="flex items-center">
+                                            <Label>Texto Badge</Label>
+                                            <TooltipSimple text="Pequeña píldora de texto arriba del título." />
+                                        </div>
+                                        <Input name="content_badge" defaultValue={content.badge} placeholder="ej. Nuevo Lanzamiento" />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label>Primary CTA Link</Label>
-                                        <Input name="content_ctaLink" defaultValue={content.ctaLink} placeholder="e.g. /signup" />
+                                        <Label>Enlace Badge (Opcional)</Label>
+                                        <Input name="content_badgeLink" defaultValue={content.badgeLink} placeholder="ej. /blog/mi-post" />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label>Primary Icon (Optional)</Label>
-                                        <Input name="content_ctaIcon" defaultValue={content.ctaIcon} placeholder="e.g. Rocket" />
+                                        <Label>Ícono Badge (Opcional)</Label>
+                                        <Input name="content_badgeIcon" defaultValue={content.badgeIcon} placeholder="ej. Bell" />
                                     </div>
                                 </div>
 
+
                                 <div className="grid grid-cols-3 gap-4">
                                     <div className="space-y-2">
-                                        <Label>Secondary CTA Text (Optional)</Label>
-                                        <Input name="content_secondaryCtaText" defaultValue={content.secondaryCtaText} placeholder="e.g. Learn More" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>Secondary CTA Link (Optional)</Label>
-                                        <Input name="content_secondaryCtaLink" defaultValue={content.secondaryCtaLink} placeholder="e.g. /about" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>Secondary Icon (Optional)</Label>
-                                        <Input name="content_secondaryCtaIcon" defaultValue={content.secondaryCtaIcon} placeholder="e.g. Sparkles" />
-                                    </div>
-                                    <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                                        <DynamicIcon name="Layout" className="w-4 h-4" /> Nexus Variant Config
-                                    </h4>
-                                    <div className="grid md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label>Visual Variant</Label>
-                                            <Select name="content_variant" defaultValue={content.variant || 'A'} onValueChange={(val) => updateContent('variant', val)}>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Select variant" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="A">Variant A (Classic/Grid)</SelectItem>
-                                                    <SelectItem value="B">Variant B (Visual/Creative)</SelectItem>
-                                                    <SelectItem value="C">Variant C (Minimal/Luxury)</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                            <input type="hidden" name="content_variant" value={content.variant || 'A'} />
+                                        <div className="flex items-center">
+                                            <Label>Texto Botón Principal</Label>
+                                            <TooltipSimple text="El botón de acción más importante (CTA)." />
                                         </div>
+                                        <Input name="content_ctaText" defaultValue={content.ctaText} placeholder="ej. Ver Proyectos" />
                                     </div>
+                                    <div className="space-y-2">
+                                        <Label>Enlace Botón Principal</Label>
+                                        <Input name="content_ctaLink" defaultValue={content.ctaLink} placeholder="ej. /projects" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Ícono Principal (Opcional)</Label>
+                                        <Input name="content_ctaIcon" defaultValue={content.ctaIcon} placeholder="ej. Rocket" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div className="space-y-2">
+                                        <div className="flex items-center">
+                                            <Label>Texto Botón Secundario</Label>
+                                            <TooltipSimple text="Botón alternativo, usualmente transparente o borde." />
+                                        </div>
+                                        <Input name="content_secondaryCtaText" defaultValue={content.secondaryCtaText} placeholder="ej. Descargar CV" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Enlace Botón Secundario</Label>
+                                        <Input name="content_secondaryCtaLink" defaultValue={content.secondaryCtaLink} placeholder="ej. /about" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Ícono Secundario (Opcional)</Label>
+                                        <Input name="content_secondaryCtaIcon" defaultValue={content.secondaryCtaIcon} placeholder="ej. Sparkles" />
+                                    </div>
+                                    <input type="hidden" name="content_variant" value="A" />
                                 </div>
                             </>
                         )}
 
-                        {(type !== 'HERO' && type !== 'ABOUT_HERO' && type !== 'FEATURES' && type !== 'BLOG_FEED' && type !== 'PROJECT_FEED' && type !== 'EVENT_FEED' && type !== 'CTA') && (
+                        {(type !== 'HERO' && type !== 'ABOUT_HERO' && type !== 'FEATURES' && type !== 'TECH_STACK' && type !== 'BLOG_FEED' && type !== 'PROJECT_FEED' && type !== 'CTA') && (
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <Label>Headline / Title</Label>
-                                    <Input name="content_headline" defaultValue={content.headline || content.title} placeholder="Section Headline" />
+                                    <Label>Título / Headline</Label>
+                                    <Input name="content_headline" defaultValue={content.headline || content.title} placeholder="Título de la sección" />
                                     {/* Fallback support for 'title' key if used by About previously */}
                                     <input type="hidden" name="content_title" value={content.headline || content.title} />
                                 </div>
@@ -343,8 +341,8 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
                                 )}
 
                                 <div className="space-y-2">
-                                    <Label>Subheadline / Description</Label>
-                                    <Textarea name="content_subheadline" defaultValue={content.subheadline || content.body} placeholder="Short description or sub-title" />
+                                    <Label>Subtítulo / Descripción</Label>
+                                    <Textarea name="content_subheadline" defaultValue={content.subheadline || content.body} placeholder="Descripción corta o subtítulo..." />
                                     <input type="hidden" name="content_body" value={content.subheadline || content.body} />
                                 </div>
 
@@ -429,36 +427,46 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
                             </div>
                         )}
 
-                        {(type === 'BLOG_FEED' || type === 'PROJECT_FEED' || type === 'EVENT_FEED') && (
+                        {(type === 'BLOG_FEED' || type === 'PROJECT_FEED') && (
                             <>
                                 <div className="space-y-2">
-                                    <Label>Section Title</Label>
-                                    <Input name="content_title" defaultValue={content.title} placeholder="e.g. Latest Posts" required />
+                                    <Label>Título de la Sección</Label>
+                                    <Input name="content_title" defaultValue={content.title} placeholder="ej. Últimos Posts" required />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Display Count</Label>
+                                    <div className="flex items-center">
+                                        <Label>Cantidad a Mostrar</Label>
+                                        <TooltipSimple text="Número de items (posts o proyectos) a mostrar." />
+                                    </div>
                                     <Input type="number" name="content_count" defaultValue={content.count || 3} min={1} max={12} required />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Description/Subtitle</Label>
-                                    <Input name="content_subtitle" defaultValue={content.subtitle} placeholder="Optional subtitle text" />
+                                    <Label>Descripción / Subtítulo</Label>
+                                    <Input name="content_subtitle" defaultValue={content.subtitle} placeholder="Texto opcional debajo del título" />
                                 </div>
                             </>
                         )}
 
-                        {type === 'FEATURES' && (
+                        {(type === 'FEATURES' || type === 'TECH_STACK') && (
                             <>
                                 <div className="space-y-2">
-                                    <Label>Section Headline</Label>
-                                    <Input name="content_title" defaultValue={content.title} placeholder="e.g. Stay on top of customer support" required />
+                                    <Label>Título Principal</Label>
+                                    <Input name="content_title" defaultValue={content.title} placeholder={type === 'TECH_STACK' ? "ej. Stack Tecnológico" : "ej. Nuestras Características"} required />
                                 </div>
-                                <div className="space-y-2">
-                                    <Label>Subheadline</Label>
-                                    <Textarea name="content_subheadline" defaultValue={content.subheadline} placeholder="Description text..." />
-                                </div>
+                                {type === 'TECH_STACK' ? (
+                                    <div className="space-y-2">
+                                        <Label>Subtítulo (Opcional)</Label>
+                                        <Input name="content_subheadline" defaultValue={content.subheadline} placeholder="Texto pequeño arriba o abajo..." />
+                                    </div>
+                                ) : (
+                                    <div className="space-y-2">
+                                        <Label>Subtítulo</Label>
+                                        <Textarea name="content_subheadline" defaultValue={content.subheadline} placeholder="Descripción de la sección..." />
+                                    </div>
+                                )}
 
                                 <div className="space-y-4 border rounded-md p-4 bg-muted/20">
-                                    <Label className="text-base font-semibold">Features List</Label>
+                                    <Label className="text-base font-semibold">{type === 'TECH_STACK' ? 'Technologies List' : 'Features List'}</Label>
 
                                     <div className="grid gap-4">
                                         {featureItems.map((item, index) => (
@@ -468,7 +476,7 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
                                                         {item.icon && <span className="text-xs bg-muted px-1 rounded">{item.icon}</span>}
                                                         <div className="font-bold">{item.title}</div>
                                                     </div>
-                                                    <div className="text-sm text-muted-foreground">{item.description}</div>
+                                                    {type !== 'TECH_STACK' && <div className="text-sm text-muted-foreground">{item.description}</div>}
                                                     {item.link && <div className="text-xs text-primary mt-1">{item.link}</div>}
                                                 </div>
                                                 <Button type="button" variant="ghost" size="sm" onClick={() => removeFeature(index)}>
@@ -479,7 +487,7 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
                                     </div>
 
                                     <div className="space-y-3 pt-4 border-t">
-                                        <Label>Add New Feature</Label>
+                                        <Label>Add New {type === 'TECH_STACK' ? 'Technology' : 'Feature'}</Label>
 
                                         {/* Icon Picker */}
                                         <div className="space-y-3">
@@ -524,22 +532,27 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
                                         </div>
 
                                         <Input
-                                            placeholder="Feature Title"
+                                            placeholder={type === 'TECH_STACK' ? "Technology Name (e.g. React)" : "Feature Title"}
                                             value={newFeature.title}
                                             onChange={(e) => setNewFeature({ ...newFeature, title: e.target.value })}
                                         />
-                                        <Textarea
-                                            placeholder="Feature Description"
-                                            value={newFeature.description}
-                                            onChange={(e) => setNewFeature({ ...newFeature, description: e.target.value })}
-                                        />
-                                        <Input
-                                            placeholder="Link text (e.g. Learn more ->)"
-                                            value={newFeature.link}
-                                            onChange={(e) => setNewFeature({ ...newFeature, link: e.target.value })}
-                                        />
+                                        {type !== 'TECH_STACK' && (
+                                            <Textarea
+                                                placeholder="Feature Description"
+                                                value={newFeature.description}
+                                                onChange={(e) => setNewFeature({ ...newFeature, description: e.target.value })}
+                                            />
+                                        )}
+                                        {type !== 'TECH_STACK' && (
+                                             <Input
+                                                placeholder="Link text (e.g. Learn more ->)"
+                                                value={newFeature.link}
+                                                onChange={(e) => setNewFeature({ ...newFeature, link: e.target.value })}
+                                            />
+                                        )}
+                                        
                                         <Button type="button" size="sm" onClick={addFeature} disabled={!newFeature.title}>
-                                            <Plus className="h-4 w-4 mr-2" /> Add Feature
+                                            <Plus className="h-4 w-4 mr-2" /> Add {type === 'TECH_STACK' ? 'Tech' : 'Feature'}
                                         </Button>
                                     </div>
 
@@ -570,8 +583,8 @@ export function HomeSectionForm({ initialData, isEditing = false, category = 'HO
                 </Card>
 
                 <div className="flex justify-end gap-4">
-                    <Button type="button" variant="outline" onClick={() => history.back()}>Cancel</Button>
-                    <Button type="submit">{isEditing ? 'Save Changes' : 'Create Section'}</Button>
+                    <Button type="button" variant="outline" onClick={() => history.back()}>Cancelar</Button>
+                    <Button type="submit">{isEditing ? 'Guardar Cambios' : 'Crear Sección'}</Button>
                 </div>
             </div>
         </form >

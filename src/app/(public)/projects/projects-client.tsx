@@ -8,10 +8,18 @@ import { Project } from "@prisma/client"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
 
 interface ProjectsClientProps {
-    projects: Project[]
+    projects: (Omit<Project, 'tags'> & { tags: string })[]
 }
 
-export function ProjectsClient({ projects }: ProjectsClientProps) {
+export function ProjectsClient({ projects: rawProjects }: ProjectsClientProps) {
+    // Parse tags
+    const projects = useMemo(() => {
+        return rawProjects.map(p => ({
+            ...p,
+            tags: p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : []
+        }))
+    }, [rawProjects])
+
     const [filter, setFilter] = useState("all")
     const [searchTerm, setSearchTerm] = useState("")
 

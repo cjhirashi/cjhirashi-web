@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -64,7 +64,7 @@ model Project {
   description String
   content     String
   imageUrl    String?
-  tags        String[]
+  tags        String   @default("")
   tech        String?  // Space separated keywords for search: "python tensorflow ai"
   category    String?  // "datascience", "webdev", "mobile"
   label       String?  // Badge text: "AI Model", "SaaS"
@@ -84,7 +84,7 @@ model Post {
   excerpt     String?
   content     String
   coverImage  String?
-  tags        String[]
+  tags        String   @default("")
   category    String?  @default("General")
   featured    Boolean  @default(false)
   published   Boolean  @default(false)
@@ -95,19 +95,7 @@ model Post {
   author      User     @relation(fields: [authorId], references: [id])
 }
 
-model Event {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  description String
-  content     String
-  location    String?
-  date        DateTime
-  imageUrl    String?
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
+
 
 model HomeSection {
   id        String   @id @default(cuid())

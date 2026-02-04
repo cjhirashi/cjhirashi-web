@@ -9,6 +9,7 @@ import {
     User,
     FolderKanban,
     LogOut,
+    Home,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -20,6 +21,11 @@ const sidebarItems = [
         title: "Inicio",
         href: "/admin",
         icon: LayoutDashboard,
+    },
+    {
+        title: "Portada Home",
+        href: "/admin/home",
+        icon: Home,
     },
     {
         title: "Sobre Mí",

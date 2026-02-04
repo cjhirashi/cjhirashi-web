@@ -15,11 +15,16 @@ export const dynamic = "force-dynamic"
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
     const { slug } = await params
-    const project = await prisma.project.findUnique({
+    const rawProject = await prisma.project.findUnique({
         where: {
             slug,
         },
     })
+
+    const project = rawProject ? {
+        ...rawProject,
+        tags: rawProject.tags ? rawProject.tags.split(',').map(t => t.trim()).filter(Boolean) : []
+    } : null
 
     if (!project) {
         notFound()

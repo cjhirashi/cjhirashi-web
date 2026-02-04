@@ -101,43 +101,4 @@ export async function ProjectFeedSection({ content }: SectionProps) {
     )
 }
 
-export async function EventFeedSection({ content }: SectionProps) {
-    const limit = parseInt(content.count) || 3
-    const events = await prisma.event.findMany({
-        where: { published: true, date: { gte: new Date() } }, // Upcoming events
-        orderBy: { date: "asc" },
-        take: limit,
-    })
 
-    if (events.length === 0) return null
-
-    return (
-        <section className="py-12 md:py-16 lg:py-24">
-            <div className="container px-4 md:px-6">
-                <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{content.title || "Upcoming Events"}</h2>
-                    {content.subtitle && <p className="text-muted-foreground">{content.subtitle}</p>}
-                </div>
-                <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-3">
-                    {events.map((event) => (
-                        <Card key={event.id} className="flex flex-col">
-                            <CardHeader>
-                                <div className="flex items-center text-sm text-primary mb-2">
-                                    <Calendar className="mr-2 h-4 w-4" />
-                                    {formatDate(event.date)}
-                                </div>
-                                <CardTitle>{event.title}</CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex-1">
-                                <p className="text-muted-foreground line-clamp-3">{event.description}</p>
-                                <div className="mt-2 text-sm text-muted-foreground">
-                                    📍 {event.location || 'Online'}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-            </div>
-        </section>
-    )
-}

@@ -20,7 +20,7 @@ export async function createProject(formData: FormData) {
     const link = formData.get("link") as string
     const githubLink = formData.get("githubLink") as string
     const tagsString = formData.get("tags") as string
-    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "").join(",")
     const tech = formData.get("tech") as string
     const category = formData.get("category") as string
     const label = formData.get("label") as string
@@ -64,7 +64,7 @@ export async function updateProject(id: string, formData: FormData) {
     const link = formData.get("link") as string
     const githubLink = formData.get("githubLink") as string
     const tagsString = formData.get("tags") as string
-    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "").join(",")
     const tech = formData.get("tech") as string
     const category = formData.get("category") as string
     const label = formData.get("label") as string

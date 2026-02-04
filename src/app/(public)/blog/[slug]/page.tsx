@@ -35,10 +35,15 @@ export async function generateStaticParams() {
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const { slug } = await params
-    const post = await prisma.post.findUnique({
+    const rawPost = await prisma.post.findUnique({
         where: { slug },
         include: { author: true },
     })
+
+    const post = rawPost ? {
+        ...rawPost,
+        tags: rawPost.tags ? rawPost.tags.split(',').filter(Boolean) : []
+    } : null
 
     if (!post || !post.published || (post.publishedAt && post.publishedAt > new Date())) {
         notFound()

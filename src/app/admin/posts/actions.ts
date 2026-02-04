@@ -25,7 +25,7 @@ export async function createPost(formData: FormData) {
     const content = formData.get("content") as string
     const excerpt = formData.get("excerpt") as string
     const tagsString = formData.get("tags") as string
-    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "").join(",")
     const published = formData.get("published") === "on"
     const publishedAtString = formData.get("publishedAt") as string
     let publishedAt = publishedAtString ? new Date(publishedAtString) : null
@@ -69,7 +69,7 @@ export async function updatePost(id: string, formData: FormData) {
     const content = formData.get("content") as string
     const excerpt = formData.get("excerpt") as string
     const tagsString = formData.get("tags") as string
-    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "")
+    const tags = tagsString.split(",").map((tag) => tag.trim()).filter((tag) => tag !== "").join(",")
     const published = formData.get("published") === "on"
     const publishedAtString = formData.get("publishedAt") as string
     let publishedAt = publishedAtString ? new Date(publishedAtString) : null
