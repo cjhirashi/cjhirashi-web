@@ -1,0 +1,82 @@
+/* EXTERNAL STYLESHEET: styles.css
+   Contiene todas las personalizaciones visuales del portafolio.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+    --bg: #030712;
+    --code-bg: #111827;
+    --accent: #2563eb;
+    --border: #1f2937;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: #94a3b8;
+    scroll-behavior: smooth;
+}
+
+h1 {
+    color: #e0e0e0;
+    margin-bottom: 24px;
+}
+
+h2 {
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+/* Tipografía Monoespaciada */
+.mono { 
+    font-family: 'JetBrains Mono', monospace; 
+}
+
+/* Efectos de Navegación */
+.nav-link {
+    transition: all 0.2s ease;
+}
+
+/* Animación de entrada suave */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in { 
+    animation: slideUp 0.5s ease-out forwards; 
+}
+
+.delay-1 { 
+    animation-delay: 0.1s; 
+}
+
+/* Contenedores de Visualización de Datos */
+.dashboard-preview {
+    background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Estilo de Gráficos Simulados */
+.chart-bar {
+    background: var(--accent);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.group:hover .chart-bar {
+    opacity: 1;
+    transform: scaleY(1.1);
+}
+
+/* Esto le devuelve la vida a tus etiquetas de Markdown */
+.markdown-container strong {
+    font-weight: bold;
+    color: #60a5fa; /* O el color exacto de tu accent */
+}
+
+.markdown-container p {
+    margin-bottom: 1rem;
+}

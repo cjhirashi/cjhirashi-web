@@ -1,0 +1,25 @@
+{% load add_attr %}
+
+{% for field in form %}
+<!--Contenedor del formulario-->
+<div class="mb-3">
+
+    <!--Contenedor de la etiqueta del campo -->
+    {{ field.label_tag }}
+
+    <!--Contenedor del campo de entrada -->
+    {% if field.errors %}
+        {{ field|add_attr:"class:is-invalid" }}
+    {% else %}
+        {{ field }}
+    {% endif %}
+
+    <!--Contenedor de los errores del campo -->
+    <div class="invalid-feedback">
+    {% for error in field.errors %}
+        {{ error }}
+    {% endfor %}
+    </div>
+
+</div>
+{% endfor %}

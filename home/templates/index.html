@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% load markdown_extras %}
+{% block content %}
+
+    <main class="flex-1">
+        <!-- SECCION HERO -->
+        <section id="hero" class="mx-auto max-w-5xl px-6 py-24 md:py-32">
+            <div class="animate-in opacity-0">
+                <p class="mono text-[13px] text-accent font-bold uppercase tracking-[0.05em]">
+                    {{ datos.intro }}
+                </p>
+                <h1 class="mt-4 text-[42px] md:text-[58px] font-bold leading-[1.05] text-white tracking-tight max-w-4xl">
+                    {{ datos.titulo }}
+                </h1>
+                {% for parrafo in datos.descripcion %}
+                    <div class="markdown-container text-base {% if forloop.first %}mt-8{% else %}mt-4{% endif %} text-muted">
+                        {{ parrafo|markdown_to_html }}
+                    </div>
+                {% endfor %}
+                <div class="mt-10 flex items-center gap-6">
+                    <a href="#proyectos" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-4 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95 shadow-lg shadow-blue-500/10">Ver proyectos <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    <a href="#blog" class="text-sm font-bold text-muted transition-colors hover:text-white">Leer blog <span class="ml-1">→</span></a>
+                </div>
+            </div>
+
+            <!-- Métricas -->
+            {% if metricas %}
+
+                <div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 animate-in delay-1 opacity-0">
+                    {% for metrica in metricas %}
+                    <div class="p-8 rounded-2xl bg-gray-900/40 border border-gray-800/50">
+                        <p class="text-[42px] font-bold text-white tracking-tight">
+                            {{ metrica.titulo }}
+                        </p>
+                        <p class="mt-1 text-[13px] font-medium text-muted">
+                            {{ metrica.subtitulo }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+
+            <!-- STACK -->
+            <div>
+
+                <h2 class="mt-20
+                text-3xl font-bold">Stack</h2>
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 animate-in delay-1 opacity-0">
+
+                    {% for stack in stacks %}
+
+                        <div class="p-8 rounded-2xl bg-gray-900/40 border border-gray-800/50">
+                            <p class="text-[22px] font-bold text-white tracking-tight">
+                                {{ stack.nombre }}
+                            </p>
+                            <p class="mt-1 text-[13px] font-medium text-muted">
+                                {{ stack.descripcion }}
+                            </p>
+                        </div>
+
+                    {% empty %}
+
+                        <p class="text-muted">Aún no hay stacks para mostrar.</p>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SECCION PROYECTOS -->
+        <section id="proyectos" class="border-t border-gray-800/50 bg-[#020617]/50">
+            
+            <div class="mx-auto max-w-5xl px-6 py-24">
+                <div class="flex items-center justify-between mb-12">
+                    <h2 class="text-3xl font-extrabold text-white tracking-tight">Proyectos Destacados</h2>
+                    <a href="/proyectos/" class="text-sm font-bold text-accent hover:underline flex items-center gap-2">Ver todos <span class="text-xs">→</span></a>
+                </div>
+                
+                <div class="grid gap-8 md:grid-cols-2">
+
+                    {% for proyecto in proyectos %}
+                    <div class="group flex flex-col rounded-3xl border border-gray-800/50 bg-gray-900/30 overflow-hidden hover:border-accent/40 transition-all">
+                        
+                        <!-- IMAGEN -->
+                        <div class="dashboard-preview h-64 overflow-hidden flex items-center justify-center">
+                            {% if proyecto.imagen_url %}
+                                <img src="{{ proyecto.imagen_url }}" alt="{{ proyecto.titulo }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            {% else %}
+                                <div class="p-8 flex items-end justify-center gap-2 opacity-40">
+                                    <div class="chart-bar w-8 h-[40%] rounded-t-sm"></div>
+                                    <div class="chart-bar w-8 h-[85%] rounded-t-sm"></div>
+                                    <div class="chart-bar w-8 h-[60%] rounded-t-sm"></div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- DETALLES -->
+                        <div class="p-8 space-y-5">
+
+                            <!-- INFORMACIÓN PRINCIPAL -->
+                            <div class="space-y-2">
+
+                                <!-- CATEGORÍA -->
+                                <p class="mono text-[11px] font-bold text-accent uppercase tracking-widest">
+                                    {{ proyecto.categoria.nombre|default:"Sin Categoría" }}
+                                </p>
+
+                                <!-- TÍTULO -->
+                                <h3 class="text-[26px] font-bold text-white group-hover:text-accent transition-colors leading-tight">
+                                    {{ proyecto.titulo }}
+                                </h3>
+
+                                <!-- DESCRIPCIÓN -->
+                                <p class="text-[15px] text-muted leading-relaxed">
+                                    {{ proyecto.descripcion|truncatewords:40 }}
+                                </p>
+
+                            </div>
+
+                            <!-- OBJETIVO -->
+                            {% if proyecto.tipo_objetivo %}
+                                <div class="inline-flex items-center px-3 py-2 rounded-xl bg-gray-800/80 border border-gray-700/50 text-sm font-bold text-gray-300">
+                                    <span class="text-white mr-2">{{ proyecto.valor_objetivo }}</span> {{ proyecto.tipo_objetivo.nombre }}
+                                </div>
+                            {% endif %}
+
+                            <!-- STACK -->
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                {% for item in proyecto.stack.all %}
+                                <span class="px-2 py-1 rounded-md bg-gray-800/50 text-[10px] mono text-gray-400">{{ item.nombre }}</span>
+                                {% endfor %}
+                            </div>
+
+                            <!-- FECHA -->
+                            <p class="text-accent text-[11px] mono text-muted/60 font-bold uppercase pt-2">
+                                {{ proyecto.fecha_proyecto|date:"F Y" }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {% empty %}
+                    <p class="text-muted">Aún no hay proyectos marcados para mostrar en la portada.</p>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECCION BLOGS -->
+        <section id="blog" class="border-t border-gray-800/50">
+            <div class="mx-auto max-w-5xl px-6 py-24">
+                <div class="flex items-center justify-between mb-16">
+                    <h2 class="text-3xl font-extrabold text-white tracking-tight">Últimas Publicaciones</h2>
+                    <a href="#" class="text-sm font-bold text-accent hover:underline">Ver todas →</a>
+                </div>
+                
+                <div class="space-y-16 max-w-4xl">
+                    <article class="group cursor-pointer">
+                        <div class="flex items-center gap-3 text-[11px] mono font-bold tracking-[0.1em] mb-4">
+                            <span class="text-accent uppercase">Machine Learning</span>
+                            <span class="text-gray-700 font-normal">·</span>
+                            <span class="text-muted/80">10 Mar 2026</span>
+                            <span class="text-gray-700 font-normal">·</span>
+                            <span class="text-muted/80 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 8 min</span>
+                        </div>
+                        <h3 class="text-[28px] font-bold text-white group-hover:text-accent transition-colors mb-3 tracking-tight">Feature Engineering para Series Temporales</h3>
+                        <p class="text-[17px] text-muted leading-relaxed">Técnicas avanzadas que mejoraron mis modelos de forecasting en un 12%.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock %}

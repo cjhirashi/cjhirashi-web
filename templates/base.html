@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>cjhirashi // Portfolio</title>
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <!-- Referencia al archivo CSS externo -->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            dark: '#030712',
+                            code: '#111827',
+                            accent: '#2563eb',
+                            muted: '#64748b',
+                            foreground: '#f8fafc'
+                        }
+                    }
+                }
+            }
+        </script>
+    </head>
+
+    <!-- ECABEZADO -->
+    <nav class="border-b border-gray-800/50 py-5 px-6 md:px-12 flex justify-between items-center sticky top-0 bg-[#030712]/95 backdrop-blur-md z-50">
+        <div class="flex items-center gap-1">
+            <span class="mono font-bold text-white text-[17px] tracking-tight">cjhirashi<span class="text-accent">/</span>portfolio</span>
+        </div>
+        
+        <div class="hidden md:flex items-center gap-10">
+            <div class="flex items-center gap-8 text-[14px]">
+                <a href="#hero" class="nav-link font-bold text-white">Inicio</a>
+                <a href="#proyectos" class="nav-link font-medium text-muted hover:text-white">Proyectos</a>
+                <a href="#blog" class="nav-link font-medium text-muted hover:text-white">Blog</a>
+            </div>
+            
+            <div class="flex items-center gap-5 ml-2 border-l border-gray-800 pl-8">
+                <a href="https://github.com/cjhirashi" class="text-muted hover:text-white transition-colors"><i data-lucide="github" class="w-[18px] h-[18px]"></i></a>
+                <a href="https://www.linkedin.com/in/cjhirashi/" class="text-muted hover:text-white transition-colors"><i data-lucide="linkedin" class="w-[18px] h-[18px]"></i></a>
+                <a href="mailto:carlos@cjhirashi.com" class="text-muted hover:text-white transition-colors"><i data-lucide="mail" class="w-[18px] h-[18px]"></i></a>
+            </div>
+        </div>
+        <div class="md:hidden"><i data-lucide="menu" class="text-white w-6 h-6"></i></div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <body class="min-h-screen flex flex-col">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </body>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="border-t border-gray-800/50 py-14 px-6 bg-gray-950/40">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div class="flex flex-col gap-1"><span class="text-xs font-medium text-muted">© 2026 · cjhirashi</span></div>
+            <div class="text-[11px] font-bold text-muted/50 tracking-[0.15em] uppercase">Construido con rigor y datos reales.</div>
+        </div>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+
+</html>
