@@ -71,12 +71,219 @@ h2 {
     transform: scaleY(1.1);
 }
 
-/* Esto le devuelve la vida a tus etiquetas de Markdown */
-.markdown-container strong {
-    font-weight: bold;
-    color: #60a5fa; /* O el color exacto de tu accent */
+/* --- CONTENEDOR MAESTRO DE MARKDOWN --- */
+/* Estas reglas aseguran que el reset de Tailwind no rompa el formato técnico */
+
+.markdown-container {
+    line-height: 1.7;
+    color: #cbd5e1;
 }
 
+/* Párrafos: Restauramos el bloque para permitir saltos de línea */
 .markdown-container p {
-    margin-bottom: 1rem;
+    display: block !important;
+    margin-bottom: 1.5rem !important;
 }
+
+/* Listas: Restauramos viñetas y sangrías */
+.markdown-container ul {
+    list-style-type: disc !important;
+    margin-left: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.markdown-container ol {
+    list-style-type: decimal !important;
+    margin-left: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.markdown-container li {
+    display: list-item !important;
+    margin-bottom: 0.5rem !important;
+    padding-left: 0.5rem;
+}
+
+/* Títulos dentro de Markdown */
+.markdown-container h1, 
+.markdown-container h2, 
+.markdown-container h3 {
+    color: #2563eb !important;
+    font-weight: 700 !important;
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Énfasis y Negritas */
+.markdown-container strong, 
+.markdown-container b {
+    color: #2563eb !important;
+    font-weight: 700 !important;
+}
+
+.markdown-container em, 
+.markdown-container i {
+    font-style: italic;
+    color: #e2e8f0;
+}
+
+/* Enlaces */
+.markdown-container a {
+    color: var(--accent);
+    text-decoration: underline;
+    transition: opacity 0.2s;
+}
+
+.markdown-container a:hover {
+    opacity: 0.8;
+}
+
+/* --- BLOQUES DE CÓDIGO (ESTILO TERMINAL) --- */
+
+/* Bloque completo (```python) */
+.markdown-container pre {
+    background-color: #0f172a !important; /* Fondo azul muy oscuro */
+    padding: 1.5rem !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid #1e293b !important;
+    overflow-x: auto !important;
+    margin: 1.5rem 0 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* Texto de código */
+.markdown-container code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+    font-size: 0.9em !important;
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa !important;  /* Azul claro para código */
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.375rem;
+}
+
+/* Evitar fondo en código dentro de bloques pre */
+.markdown-container pre code {
+    /*color: inherit !important; */
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    border-radius: 0 !important;
+}
+
+/* SOLUCIÓN REAL: Colores específicos para los tokens de Highlight.js.
+   Usamos selectores descendentes para ganar la batalla de especificidad 
+   sin romper el resto del sitio.
+*/
+/* Keywords / Palabras clave (def, return, if, etc.) */
+.markdown-container .hljs-keyword, 
+.markdown-container .codehilite .k, 
+.markdown-container .codehilite .kn, 
+.markdown-container .codehilite .kp, 
+.markdown-container .codehilite .kr { 
+    color: #c678dd !important; 
+    font-weight: bold !important; 
+} 
+
+/* Strings / Cadenas de texto */
+.markdown-container .hljs-string, 
+.markdown-container .codehilite .s, 
+.markdown-container .codehilite .s1, 
+.markdown-container .codehilite .s2, 
+.markdown-container .codehilite .sb, 
+.markdown-container .codehilite .sc, 
+.markdown-container .codehilite .sd { 
+    color: #98c379 !important; 
+} 
+
+/* Funciones y Clases */
+.markdown-container .hljs-title, 
+.markdown-container .hljs-function, 
+.markdown-container .codehilite .nf, 
+.markdown-container .codehilite .nc, 
+.markdown-container .codehilite .nn,
+.markdown-container .codehilite .fm { 
+    color: #61afef !important; 
+} 
+
+/* Variables, Parámetros y Atributos */
+.markdown-container .hljs-variable, 
+.markdown-container .hljs-params, 
+.markdown-container .hljs-attr,
+.markdown-container .codehilite .nv, 
+.markdown-container .codehilite .vi, 
+.markdown-container .codehilite .v,
+.markdown-container .codehilite .nb { 
+    color: #e06c75 !important; 
+} 
+
+/* Comentarios */
+.markdown-container .hljs-comment, 
+.markdown-container .hljs-quote,
+.markdown-container .codehilite .c, 
+.markdown-container .codehilite .c1, 
+.markdown-container .codehilite .cm { 
+    color: #5c6370 !important; 
+    font-style: italic !important; 
+} 
+
+/* Números y Literales */
+.markdown-container .hljs-number, 
+.markdown-container .hljs-literal, 
+.markdown-container .codehilite .m, 
+.markdown-container .codehilite .mi, 
+.markdown-container .codehilite .mf, 
+.markdown-container .codehilite .mo { 
+    color: #d19a66 !important; 
+} 
+
+/* Operadores y Puntuación */
+.markdown-container .codehilite .o, 
+.markdown-container .codehilite .p {
+    color: #abb2bf !important;
+}
+
+/* Estilo para código en línea (fuera de bloques pre) */
+.markdown-container :not(pre):not(.codehilite) > code {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.9em !important;
+    background: rgba(37, 99, 235, 0.1);
+    color: #60a5fa !important;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.375rem;
+}
+
+
+/* Blockquotes (Citas) */
+.markdown-container blockquote {
+    border-left: 4px solid var(--accent);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #94a3b8;
+}
+
+/* --- BOTONES DE ACCIÓN (GITHUB / WEB) --- */
+.btn-action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.75rem;
+    background-color: rgba(31, 41, 55, 0.4);
+    border: 1px solid rgba(55, 65, 81, 0.5);
+    color: #94a3b8;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-action-icon:hover {
+    background-color: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+}
+
+.btn-action-icon:active {
+    transform: scale(0.92);

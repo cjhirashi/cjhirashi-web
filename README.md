@@ -72,4 +72,5 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Desarrollado con ⚡ por cjhirashi
+---
+*Desarrollado por:* ***cjhirashi***

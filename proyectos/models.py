@@ -1,22 +1,30 @@
 from django.db import models
 from django.utils import timezone
 
+# Eliminamos la línea de "from .models import..." que causaba el error circular
+
 class CategoriaProyecto(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, help_text="Descripción breve de la categoría, ej: Visión por Computadora, Procesamiento de Lenguaje Natural, etc.")
-    def __str__(self): return self.nombre
+    
+    def __str__(self): 
+        return self.nombre
 
 class StackProyecto(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, help_text="Descripción breve del stack tecnológico, ej: Python, TensorFlow, AWS, etc.")
-    def __str__(self): return self.nombre
+    
+    def __str__(self): 
+        return self.nombre
     
 class SectorProyecto(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, help_text="Descripción breve del sector, ej: Finanzas, Salud, Retail, etc.")
-    def __str__(self): return self.nombre
+    
+    def __str__(self): 
+        return self.nombre
 
-# --- Nueva Tabla para Métricas/Objetivos ---
+# --- Tabla para Métricas/Objetivos ---
 class MetricaObjetivo(models.Model):
     nombre = models.CharField(max_length=100, unique=True, help_text="Ej: AUC-ROC, RMSE, Accuracy, F1-Score")
     descripcion_metrica = models.TextField(blank=True, help_text="Breve explicación de qué mide esta métrica")
@@ -28,7 +36,7 @@ class Proyecto(models.Model):
     titulo = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, max_length=255, null=True, blank=True)
     
-    # Relación con la nueva tabla de métricas
+    # Relación con la tabla de métricas
     tipo_objetivo = models.ForeignKey(
         MetricaObjetivo, 
         on_delete=models.PROTECT, 
@@ -39,8 +47,8 @@ class Proyecto(models.Model):
     )
     valor_objetivo = models.CharField(
         max_length=100, 
-        null=True,
-        blank=True,
+        null=True, 
+        blank=True, 
         help_text="Ej: 0.92, 15%, etc."
     )
     

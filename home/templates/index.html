@@ -153,7 +153,7 @@
 
         </section>
 
-        <!-- SECCION BLOGS -->
+        <!-- SECCION BLOGS DINÁMICA -->
         <section id="blog" class="border-t border-gray-800/50">
             <div class="mx-auto max-w-5xl px-6 py-24">
                 <div class="flex items-center justify-between mb-16">
@@ -162,17 +162,27 @@
                 </div>
                 
                 <div class="space-y-16 max-w-4xl">
+                    {% for post in blogs %}
                     <article class="group cursor-pointer">
                         <div class="flex items-center gap-3 text-[11px] mono font-bold tracking-[0.1em] mb-4">
-                            <span class="text-accent uppercase">Machine Learning</span>
+                            <span class="text-accent uppercase">{{ post.categoria.nombre|default:"Sin Categoría" }}</span>
                             <span class="text-gray-700 font-normal">·</span>
-                            <span class="text-muted/80">10 Mar 2026</span>
+                            <span class="text-muted/80">{{ post.fecha_publicacion|date:"d M Y" }}</span>
                             <span class="text-gray-700 font-normal">·</span>
-                            <span class="text-muted/80 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 8 min</span>
+                            <span class="text-muted/80 flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> {{ post.tiempo_lectura }} min</span>
                         </div>
-                        <h3 class="text-[28px] font-bold text-white group-hover:text-accent transition-colors mb-3 tracking-tight">Feature Engineering para Series Temporales</h3>
-                        <p class="text-[17px] text-muted leading-relaxed">Técnicas avanzadas que mejoraron mis modelos de forecasting en un 12%.</p>
+                        <h3 class="text-[28px] font-bold text-white group-hover:text-accent transition-colors mb-3 tracking-tight">
+                            {{ post.titulo }}
+                        </h3>
+                        <p class="text-[17px] text-muted leading-relaxed">
+                            {{ post.extracto|default:post.contenido|truncatewords:30 }}
+                        </p>
                     </article>
+                    {% empty %}
+                    <article>
+                        <p class="text-muted italic">Próximamente habrá publicaciones interesantes aquí.</p>
+                    </article>
+                    {% endfor %}
                 </div>
             </div>
         </section>
