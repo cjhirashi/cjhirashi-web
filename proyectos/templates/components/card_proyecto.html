@@ -1,0 +1,68 @@
+{% comment %}
+    Componente reutilizable para representar un proyecto en un grid.
+    Recibe: 'proyecto' (objeto del modelo Proyecto)
+{% endcomment %}
+
+<article class="group flex flex-col rounded-3xl border border-gray-800/50 bg-gray-900/30 overflow-hidden hover:border-accent/40 transition-all">
+    
+    <!-- ÁREA MULTIMEDIA -->
+    <div class="relative">
+        <a href="{% if proyecto.slug %}{% url 'proyectos:detalle' proyecto.slug %}{% else %}#{% endif %}" class="block group-hover:no-underline">
+            <div class="dashboard-preview h-64 overflow-hidden flex items-center justify-center bg-gray-950">
+                {% if proyecto.imagen_url %}
+                    <img src="{{ proyecto.imagen_url }}" alt="{{ proyecto.titulo }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                {% else %}
+                    <!-- Placeholder con estilo de gráfico para Data Science -->
+                    <div class="p-8 flex items-end justify-center gap-2 opacity-40">
+                        <div class="chart-bar w-8 h-[40%] rounded-t-sm bg-accent"></div>
+                        <div class="chart-bar w-8 h-[85%] rounded-t-sm bg-accent"></div>
+                        <div class="chart-bar w-8 h-[60%] rounded-t-sm bg-accent"></div>
+                    </div>
+                {% endif %}
+            </div>
+        </a>
+
+        <!-- BOTONES DE ACCIÓN (GITHUB / WEB) -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+            {% if proyecto.url_github %}
+            <a href="{{ proyecto.url_github }}" target="_blank" class="btn-action-icon" title="GitHub">
+                <i data-lucide="github" class="w-5 h-5"></i>
+            </a>
+            {% endif %}
+            {% if proyecto.url_demo %}
+            <a href="{{ proyecto.url_demo }}" target="_blank" class="btn-action-icon" title="Web">
+                <i data-lucide="external-link" class="w-5 h-5"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="p-8 space-y-5">
+        <div class="space-y-2">
+            <p class="mono text-[11px] font-bold text-accent uppercase tracking-widest">
+                {{ proyecto.categoria.nombre|default:"Sin Categoría" }}
+                {% if proyecto.sector %} · {{ proyecto.sector.nombre }}{% endif %}
+            </p>
+            <h3 class="text-[26px] font-bold text-white group-hover:text-accent transition-colors leading-tight">
+                {{ proyecto.titulo }}
+            </h3>
+            <p class="text-[15px] text-muted leading-relaxed">
+                {{ proyecto.descripcion|truncatewords:25 }}
+            </p>
+        </div>
+
+        <!-- STACK TECNOLÓGICO -->
+        <div class="flex flex-wrap gap-2 pt-2">
+            {% for item in proyecto.stack.all %}
+            <span class="px-2 py-1 rounded-md bg-gray-800/50 text-[10px] mono text-gray-400">{{ item.nombre }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- FOOTER -->
+        <div class="flex items-center justify-between pt-4 border-t border-gray-800/50">
+            <time class="text-[11px] mono text-muted/60 font-bold uppercase">{{ proyecto.fecha_proyecto|date:"F Y" }}</time>
+            <span class="text-accent text-sm font-bold group-hover:translate-x-1 transition-transform">Detalles →</span>
+        </div>
+    </div>
+</article>

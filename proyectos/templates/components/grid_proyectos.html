@@ -1,0 +1,21 @@
+{% comment %}
+    Componente reutilizable 
+    Grid para desplegar tarjetas de proyectos.
+    Recibe: 'proyecto' (objeto del modelo Proyecto)
+{% endcomment %}
+
+<div class="grid gap-8 md:grid-cols-2">
+
+    {% for proyecto in proyectos %}
+
+        {% include 'components/card_proyecto.html' with proyecto=proyecto %}
+
+    {% empty %}
+    
+        <p class="text-muted">
+            Aún no hay proyectos marcados para mostrar en la portada.
+        </p>
+
+    {% endfor %}
+
+</div>

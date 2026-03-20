@@ -55,7 +55,8 @@ class Proyecto(models.Model):
     fecha_proyecto = models.DateField(default=timezone.now)
     imagen_url = models.URLField(max_length=500, null=True, blank=True, help_text="Pega aquí la URL de la imagen del proyecto")
     
-    descripcion = models.TextField()
+    descripcion = models.TextField(null=True, blank=True,)
+    contenido = models.TextField(null=True, blank=True,)
     categoria = models.ForeignKey(CategoriaProyecto, on_delete=models.SET_NULL, null=True, related_name='proyectos')
     sector = models.ForeignKey(SectorProyecto, on_delete=models.SET_NULL, null=True, related_name='proyectos')
     stack = models.ManyToManyField(StackProyecto, related_name='proyectos')

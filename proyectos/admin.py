@@ -36,7 +36,7 @@ class ProyectoAdmin(admin.ModelAdmin):
             'fields': ('titulo', 'slug', 'fecha_proyecto')
         }),
         ('Contenido y Multimedia', {
-            'fields': ('descripcion', 'imagen_url')
+            'fields': ('descripcion', 'contenido', 'imagen_url')
         }),
         ('Clasificación Técnica', {
             'fields': ('categoria', 'sector', 'stack')

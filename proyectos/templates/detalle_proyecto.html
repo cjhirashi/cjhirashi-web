@@ -90,9 +90,8 @@
                 <!-- DESCRIPCIÓN CON SOPORTE MARKDOWN -->
                 <div class="prose prose-invert prose-blue max-w-none">
                     <h2 class="text-2xl font-bold text-white mb-6">Descripción del Proyecto</h2>
-                    <div class="markdown-container text-muted text-lg leading-relaxed">
-                        {{ proyecto.descripcion|markdown_to_html }}
-                    </div>
+                    {% include 'components/markdown.html' with content=proyecto.contenido class='text-base mt-4 text-muted' %}
+                    
                 </div>
             </div>
 

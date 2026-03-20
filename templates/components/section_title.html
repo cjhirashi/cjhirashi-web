@@ -1,0 +1,29 @@
+{% comment %}
+    Componente reutilizable 
+    Sección para contenido de páginas externas.
+    Recibe: 'titulo', 'descripcion' y 'link' para el encabezado de cada sección.
+{% endcomment %}
+
+<!-- CONTENEDOR DE SECCION -->
+<div class="mt-8 flex flex-col gap-4">
+
+    <!-- ENCABEZADO DE SECCIÓN -->
+    <div class="flex items-center">
+
+        <!-- TÍTULO Y DESCRIPCIÓN -->
+        <h2 class="flex-1 text-3xl font-extrabold text-white tracking-tight">{{ titulo }}</h2>
+
+        <!-- ENLACE A PÁGINA PRINCIAPAL DE SECCION -->
+        {% if link %}
+            <a href="{{ link }}" class="text-sm font-bold text-accent hover:underline flex items-center gap-2">
+                Ver todos <span class="text-xs">→</span>
+            </a>
+        {% endif %}
+
+    </div>
+
+    <div class="mx-4">
+        {% include 'components/markdown.html' with content=descripcion class='text-base mt-4 text-muted' %}
+    </div>
+
+</div>

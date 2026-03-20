@@ -2,26 +2,17 @@
 {% load markdown_extras %}
 
 {% block content %}
-<main class="flex-1 bg-[#020617]">
-    <!-- CABECERA -->
-    <header class="mx-auto max-w-5xl px-6 pt-24 pb-8">
-        <div class="animate-in opacity-0">
-            <p class="mono text-[13px] text-accent font-bold uppercase tracking-[0.05em]">
-                {{ datos.intro }}
-            </p>
-            <h1 class="mt-4 text-[42px] md:text-[52px] font-bold leading-tight text-white tracking-tight">
-                {{ datos.titulo }}
-            </h1>
-            {% for parrafo in datos.descripcion %}
-                <div class="markdown-container text-base mt-4 text-muted max-w-2xl">
-                    {{ parrafo|markdown_to_html }}
-                </div>
-            {% endfor %}
-        </div>
+<main class="flex-1">
+
+    <!-- SECCION HERO -->
+    <header class="mx-auto max-w-6xl px-6 pt-24 pb-8">
+
+        {% include 'components/hero_1.html' with datos=datos %}
+
     </header>
 
-    <!-- BARRA DE FILTROS -->
-    <section class="mx-auto max-w-5xl px-6 mb-12">
+    <!-- SECCION BARRA DE FILTROS -->
+    <section class="mx-auto max-w-6xl px-6 mb-12">
         <form method="GET" id="filter-form" class="flex flex-wrap gap-4 p-6 rounded-2xl bg-gray-900/20 border border-gray-800/50">
             <!-- Filtro Categoría -->
             <div class="flex-1 min-w-[200px]">
@@ -58,91 +49,18 @@
         </form>
     </section>
 
-    <!-- GRID DE PROYECTOS -->
-    <section class="mx-auto max-w-5xl px-6 pb-32">
-        <div class="grid gap-8 md:grid-cols-2 animate-in delay-1 opacity-0">
-            {% for proyecto in proyectos %}
-            <article class="group flex flex-col rounded-3xl border border-gray-800/50 bg-gray-900/30 overflow-hidden hover:border-accent/40 transition-all">
+    <!-- SECCION GRID DE PROYECTOS -->
+    <section id="proyectos" class="border-t border-gray-800/50 bg-[#020617]/50">
+
+        <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col gap-8 ">
+
+            <!-- GRID -->
                 
-                <!-- ÁREA DE IMAGEN Y ACCIONES -->
-                <div class="relative">
-                    <a href="{% if proyecto.slug %}{% url 'proyectos:detalle' proyecto.slug %}{% else %}#{% endif %}" class="block group-hover:no-underline">
-                        <div class="dashboard-preview h-64 overflow-hidden flex items-center justify-center bg-gray-950">
-                            {% if proyecto.imagen_url %}
-                                <img src="{{ proyecto.imagen_url }}" alt="{{ proyecto.titulo }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            {% else %}
-                                <div class="p-8 flex items-end justify-center gap-2 opacity-40">
-                                    <div class="chart-bar w-8 h-[40%] rounded-t-sm bg-accent"></div>
-                                    <div class="chart-bar w-8 h-[85%] rounded-t-sm bg-accent"></div>
-                                    <div class="chart-bar w-8 h-[60%] rounded-t-sm bg-accent"></div>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </a>
+            {% include 'components/grid_proyectos.html' with proyecto=proyecto %}
 
-                    <!-- BOTONES DE ACCIÓN (GITHUB / WEB) -->
-                    <div class="absolute top-4 right-4 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {% if proyecto.url_github %}
-                        <a href="{{ proyecto.url_github }}" target="_blank" class="btn-action-icon" title="Repositorio GitHub">
-                            <i data-lucide="github" class="w-5 h-5"></i>
-                        </a>
-                        {% endif %}
-                        {% if proyecto.url_demo %}
-                        <a href="{{ proyecto.url_demo }}" target="_blank" class="btn-action-icon" title="Ver Web / Demo">
-                            <i data-lucide="external-link" class="w-5 h-5"></i>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="p-8 space-y-5">
-                    <div class="space-y-2">
-                        <p class="mono text-[11px] font-bold text-accent uppercase tracking-widest">
-                            {{ proyecto.categoria.nombre|default:"Sin Categoría" }} · {{ proyecto.sector.nombre|default:"General" }}
-                        </p>
-                        <h2 class="text-[26px] font-bold text-white group-hover:text-accent transition-colors leading-tight">
-                            {{ proyecto.titulo }}
-                        </h2>
-                        <p class="text-[15px] text-muted leading-relaxed">
-                            {{ proyecto.descripcion|truncatewords:25 }}
-                        </p>
-                    </div>
-
-                    {% if proyecto.tipo_objetivo %}
-                        <div class="inline-flex items-center px-3 py-2 rounded-xl bg-gray-900/50 border border-gray-800/50 text-sm font-bold text-gray-300">
-                            <span class="text-white mr-2">{{ proyecto.valor_objetivo }}</span> {{ proyecto.tipo_objetivo.nombre }}
-                        </div>
-                    {% endif %}
-
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        {% for item in proyecto.stack.all %}
-                        <span class="px-2 py-1 rounded-md bg-gray-800/50 text-[10px] mono text-gray-400">{{ item.nombre }}</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-800/50">
-                        <time class="text-[11px] mono text-muted/60 font-bold uppercase">{{ proyecto.fecha_proyecto|date:"F Y" }}</time>
-                        <div class="flex items-center gap-4">
-                            <!-- Iconos visibles en móvil si el hover no está disponible -->
-                            <div class="flex gap-2 md:hidden">
-                                {% if proyecto.url_github %}
-                                <a href="{{ proyecto.url_github }}" target="_blank" class="text-muted"><i data-lucide="github" class="w-4 h-4"></i></a>
-                                {% endif %}
-                                {% if proyecto.url_demo %}
-                                <a href="{{ proyecto.url_demo }}" target="_blank" class="text-muted"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-                                {% endif %}
-                            </div>
-                            <span class="text-accent text-sm font-bold group-hover:translate-x-1 transition-transform">Ver más →</span>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            {% empty %}
-            <div class="col-span-full py-20 text-center border border-dashed border-gray-800 rounded-3xl">
-                <p class="text-muted italic">No se encontraron proyectos con los filtros seleccionados.</p>
-            </div>
-            {% endfor %}
         </div>
+        
     </section>
+
 </main>
 {% endblock %}

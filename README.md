@@ -1,72 +1,92 @@
-# 🚀 Django Portfolio & Blog Professional
+# 🚀 Portafolio + Blog (Django)
 
-Este es un proyecto de portafolio de alto rendimiento construido con **Django 5.1**, diseñado para mostrar proyectos de desarrollo y gestionar un blog técnico personal.
+Portafolio profesional con blog personal enfocado en **Ciencia de Datos** y **Desarrollo Web con Django**.
 
-## 🛠️ Stack Tecnológico
+El objetivo del repositorio es servir como base para publicar proyectos, documentar aprendizajes y mostrar capacidades end-to-end: modelado de datos, construcción de apps Django, manejo de contenido tipo blog, y una presentación limpia con templates.
 
-* **Backend:** Python 3.12+, Django 5.1
-* **Base de Datos:** PostgreSQL (Producción) / SQLite (Desarrollo)
-* **Frontend:** Django Templates + Tailwind CSS
-* **Gestión de Tareas:** Celery + Redis (Opcional para newsletters/SEO)
-* **Despliegue:** Docker Ready
+Incluye secciones para **Inicio**, **Proyectos**, **Blog** y **Sobre mí**, con navegación por URLs y estructura por apps (home, proyectos, blog). A medida que evolucione el proyecto, este README se mantendrá alineado con el stack real y las decisiones de arquitectura.
 
-## 📁 Estructura del Proyecto.
+## 🛠️ Stack tecnológico (actual)
+
+* **Python:** 3.13.0
+* **Django:** 6.0.2
+* **Base de datos:** SQLite (desarrollo). PostgreSQL recomendado para producción.
+* **Frontend:** Django Templates (templates HTML)
+* **CSS:** Tailwind CSS *(pendiente/por integrar si aplica al estado actual del repo)*
+* **Gestión de dependencias:** Pipenv (Pipfile / Pipfile.lock)
+
+## 📁 Estructura del proyecto (actual)
 
 ```
-├── core/               # Configuración principal (settings, urls, wsgi)
-├── apps/               # Directorio contenedor de aplicaciones
-│   ├── projects/       # Gestión de proyectos del portafolio
-│   ├── blog/           # Sistema de gestión de artículos
-│   └── pages/          # Vistas estáticas (Home, Contact, About)
-├── static/             # Archivos CSS, JS e Imágenes globales
-├── templates/          # Templates base y compartidos
 ├── manage.py
-├── requirements.txt
-└── .env.example
+├── cjhirashi_web/          # Configuración del proyecto (settings, urls, wsgi/asgi)
+├── home/                   # Landing (renderiza index.html)
+├── blog/                   # Modelos de blog (views placeholder por ahora)
+├── proyectos/              # Listado/detalle/formulario de proyectos
+├── templates/              # Templates globales + por app
+└── static/                 # Assets estáticos (ej. static/css/styles.css)
 ```
+
+## 🧭 Rutas principales
+
+- `/` → Home
+- `/proyectos/` → Proyectos
+- `/blog/` → Blog
+- `/admin/` → Django Admin
 
 ## ⚙️ Configuración Local
 
-#### 1. Clonar el repositorio:
+### 1. Clonar el repositorio
 
 ```bash
-git clone [https://github.com/cjhirashi/cjhirashi-web.git](https://github.com/cjhirashi/cjhirashi-web.git)
+git clone https://github.com/cjhirashi/cjhirashi-web.git
 cd cjhirashi-web
 ```
 
-### 2. Instalar dependencias con Pipenv:
+### 2. Crear entorno e instalar dependencias (Pipenv)
 
-Si no tienes Pipenv, instálalo con `pip install pipenv`.
+Si no tienes Pipenv:
+
+```bash
+pip install pipenv
+```
+
+Instala dependencias y activa el entorno:
 
 ```bash
 pipenv install
 pipenv shell
 ```
 
-### 3. Configurar Variables de Entorno:
+### 3. Variables de entorno
 
-Crea un archivo `.env` en la raíz basado en el ejemplo:
+Si existe un ejemplo, crea tu .env a partir de él:
 
 ```bash
 cp .env.example .env
 ```
 
-Asegúrate de configurar DEBUG=True y tu SECRET_KEY para desarrollo.
-
-### 4. Ejecutar Migraciones:
+Si no existe `.env.example`, crea un `.env` en la raíz con lo mínimo:
 
 ```bash
-python manage.py makemigration
+DEBUG=True
+SECRET_KEY=tu_secret_key
+```
+
+### 4. Migraciones
+
+```bash
+python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 5. Crear Superusuario:
+### 5. Crear superusuario
 
 ```bash
 python manage.py createsuperuser
 ```
 
-### 6. Iniciar Servidor:
+### 6. Iniciar el servidor
 
 ```bash
 python manage.py runserver

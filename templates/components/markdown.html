@@ -1,0 +1,15 @@
+{% comment %}
+    Componente Markdown
+    - content: markdown string
+    - class: clases extra opcionales
+    - tag: tag contenedor opcional
+{% endcomment %}
+
+{% load markdown_extras %}
+
+
+{% if content %}
+	<div class="markdown-container  class|default:'' ">
+		{{ content|markdown_to_html }}
+	</div>
+{% endif %}

@@ -1,0 +1,28 @@
+{% comment %}
+    Componente reutilizable 
+    Grid para desplegar tarjetas de proyectos.
+    Recibe: 'proyecto' (objeto del modelo Proyecto)
+{% endcomment %}
+
+<div class="grid gap-8 md:grid-cols-3">
+
+    {% for stack in stacks %}
+
+        <div class="p-8 rounded-2xl bg-gray-900/40 border border-gray-800/50">
+            <h2 class="text-[22px] font-bold text-white tracking-tight">
+                {{ stack.nombre }}
+            </h2>
+            <p class="mt-1 text-[13px] font-medium text-muted">
+                {{ stack.descripcion }}
+            </p>
+        </div>
+
+    {% empty %}
+    
+        <p class="text-muted">
+            Aún no hay un stack tecnológico marcado para mostrar en la portada.
+        </p>
+
+    {% endfor %}
+
+</div>

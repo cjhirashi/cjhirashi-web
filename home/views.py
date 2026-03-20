@@ -12,9 +12,13 @@ def index(request):
             'Esa experiencia se traduce directamente a mi trabajo en datos: diseño soluciones con **criterio de estructura de datos**, modelado y organización de información, cuidando consistencia, calidad y eficiencia. Me siento cómodo convirtiendo procesos complejos en pipelines claros, verificables y mantenibles, y aplico una mentalidad de depuración para encontrar fallas en datos, features y comportamiento de modelos.',
             'Trabajo con **Python** y **SQL**, y mi objetivo es construir productos de datos que funcionen en condiciones reales: modelos y sistemas analíticos que sean robustos, auditables y alineados a impacto. Mi transición a Ciencia de Datos es estratégica: pasé de automatizar sistemas inteligentes a desarrollar inteligencia basada en datos, con estándares de ingeniería y enfoque en resultados.',
             ],
+        'boton1': 'Ver proyectos',
+        'link1': '#proyectos',
+        'boton2': 'Leer blog',
+        'link2': '#blog',
     }
     
-    proyectos = Proyecto.objects.filter(publicado=True)
+    proyectos = Proyecto.objects.filter(publicado=True).filter(portada=True)
     blogs = Post.objects.filter(publicado=True)
     
     mis_stacks = StackProyecto.objects.all()

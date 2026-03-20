@@ -1,0 +1,46 @@
+{% comment %}
+    Componente Hero 1
+    - content: (diccionario)
+        -intro (str) = Texto pequeño introductorio
+        -titulo (str) = Título principal
+        -descripcion (lista[str]) = Lista de párrafos descriptivos
+        -imagen (url) = Imagen opcional para el hero
+        -boton1 (str) = Texto del botón principal
+        -link1 (url) = URL del botón principal
+        -boton2 (str) = Texto del botón secundario
+        -link2 (url) = URL del botón secundario
+{% endcomment %}
+
+
+<div class="animate-in opacity-0">
+    
+    <p class="mono text-[13px] text-accent font-bold uppercase tracking-[0.05em]">
+        {{ datos.intro }}
+    </p>
+    
+    <h1 class="mt-4 text-[42px] md:text-[58px] font-bold leading-[1.05] text-white tracking-tight max-w-4xl">
+        {{ datos.titulo }}
+    </h1>
+
+    {% for parrafo in datos.descripcion %}
+
+        <div class="markdown-container text-base {% if forloop.first %}mt-8{% else %}mt-4{% endif %} text-muted">
+            
+            {% include 'components/markdown.html' with content=parrafo class='text-base mt-4 text-muted' %}
+            
+        </div>
+
+    {% endfor %}
+
+    <div class="mt-10 flex items-center gap-6">
+
+        {% if datos.boton1 and datos.link1 %}
+            <a href="{{ datos.link1 }}" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-4 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95 shadow-lg shadow-blue-500/10">{{ datos.boton1 }} <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        {% endif %}
+
+        {% if datos.boton2 and datos.link2 %}
+            <a href="{{ datos.link2 }}" class="text-sm font-bold text-muted transition-colors hover:text-white">{{ datos.boton2 }} <span class="ml-1">→</span></a>
+        {% endif %}
+
+    </div>
+</div>
