@@ -1,0 +1,27 @@
+# --- Secrets / environment ---
+.env
+.env.local
+
+# --- Django / local artifacts ---
+*.sqlite3
+
+# collectstatic output (prod/local prod-like)
+staticfiles/
+
+# user-uploaded media (si se usa localmente)
+media/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+
+# --- Virtual envs ---
+.venv/
+venv/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
