@@ -30,4 +30,11 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+# HSTS (HTTP Strict Transport Security)
+# Empieza con 1 día para evitar “lock-in” si estás probando.
+# Cuando confirmes que todo está OK, puedes subirlo a 31536000 (1 año).
+SECURE_HSTS_SECONDS = 86400
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
