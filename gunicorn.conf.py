@@ -32,3 +32,6 @@ max_requests_jitter = 100
 accesslog = "-"
 errorlog = "-"
 loglevel = "info"
+
+capture_output = True
+loglevel = "info"

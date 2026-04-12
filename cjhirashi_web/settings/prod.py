@@ -26,6 +26,8 @@ DATABASES = {
     }
 }
 
+FORM_RENDERER = "django.forms.renderers.DjangoTemplates"
+
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
